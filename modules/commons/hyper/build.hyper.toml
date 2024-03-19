@@ -1,0 +1,37 @@
+# 项目描述（可选）
+description = ""
+
+# 主版本号（major）：当存在兼容性变化时，主版本号 +1，次版本号和修订号清零
+# 次版本号（minor）：当添加新功能时，次版本号 +1，修订号清零
+# 修订号（revision）：当有漏洞被修复时，修订号 +1
+# 版本号组成：major.minor.revision
+[version]
+major = 1
+minor = 0
+revision = 0
+
+# 项目开发者信息
+[[developers]]
+name = "ketikai"
+email = "ketikai@idealstate.team"
+key = "F2C2163FC18279C2"
+
+#[[developers]]
+#name = "xxx"
+#email = "xxx@xxx.xxx"
+#key = "XXXXXXXXXXXXXXXX"
+
+# 项目组织信息（可选）
+[publication.organization]
+name = "ideal-state"
+url = "https://github.com/ideal-state"
+
+# 项目版本控制类型及仓库地址（可选）
+[publication.scm]
+type = "git"
+url = "https://github.com/ideal-state/hyper"
+
+# 项目许可证类型及地址（可选）
+[publication.license]
+name = "Apache License 2.0"
+url = "https://www.apache.org/licenses/LICENSE-2.0"
