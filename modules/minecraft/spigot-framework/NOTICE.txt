@@ -1,6 +1,6 @@
 ------------------------------------------------------------------------------
 
-    hyper-minecraft
+    hyper-minecraft-spigot-framework
     Copyright (C) 2024  ideal-state
 
     This program is free software: you can redistribute it and/or modify

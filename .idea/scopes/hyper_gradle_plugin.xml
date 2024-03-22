@@ -1,0 +1,3 @@
+<component name="DependencyValidationManager">
+  <scope name="hyper-gradle-plugin" pattern="file[hyper-gradle-plugin.*]:*.kt||file[hyper-gradle-plugin.*]:*.kts||file[hyper.modules.hyper-gradle-plugin.*]:*.kt||file[hyper.modules.hyper-gradle-plugin.*]:*.kts" />
+</component>

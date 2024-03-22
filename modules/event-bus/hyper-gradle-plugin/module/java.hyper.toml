@@ -1,0 +1,8 @@
+# 语言相关
+[language]
+version = 8
+
+# 文件相关
+[file]
+# 字符编码
+encoding = "utf-8"

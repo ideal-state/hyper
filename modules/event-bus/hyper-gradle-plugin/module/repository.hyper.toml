@@ -1,0 +1,16 @@
+[[repositories]]
+type = "maven"
+name = "sonatype-public"
+url = "https://oss.sonatype.org/content/groups/public/"
+
+[[repositories]]
+type = "maven"
+name = "aliyun-central"
+url = "https://maven.aliyun.com/repository/central/"
+
+#[[repositories]]
+#type = "maven"
+#name = "xxx-private"
+#url = "https://xxx.xxx.xxx/repository/private/"
+#username = "xxx"
+#password = "xxx"

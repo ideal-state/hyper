@@ -1,0 +1,3 @@
+<component name="DependencyValidationManager">
+  <scope name="hyper-context" pattern="file[hyper.modules.hyper-context.*]:*.java" />
+</component>
