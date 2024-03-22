@@ -1,11 +1,28 @@
+/*
+ *    hyper-gradle-plugin
+ *    Copyright [2024] [ideal-state]
+ *
+ *    Licensed under the Apache License, Version 2.0 (the "License");
+ *    you may not use this file except in compliance with the License.
+ *    You may obtain a copy of the License at
+ *
+ *        http://www.apache.org/licenses/LICENSE-2.0
+ *
+ *    Unless required by applicable law or agreed to in writing, software
+ *    distributed under the License is distributed on an "AS IS" BASIS,
+ *    WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ *    See the License for the specific language governing permissions and
+ *    limitations under the License.
+ */
+
 package team.idealstate.hyper.gradle.module.java.task
 
-import org.apache.commons.lang3.time.DateFormatUtils
 import org.gradle.api.plugins.JavaPluginExtension
 import org.gradle.jvm.tasks.Jar
 import org.gradle.work.DisableCachingByDefault
 import team.idealstate.hyper.gradle.HyperExtension
 import team.idealstate.hyper.gradle.HyperPlugin
+import java.text.SimpleDateFormat
 import java.util.*
 
 /**
@@ -21,9 +38,6 @@ abstract class AbstractHyperJar : Jar() {
 
     init {
         group = HyperPlugin.GROUP
-    }
-
-    override fun copy() {
         val developers = project.extensions.getByType(HyperExtension::class.java)
             .build.developers.joinToString(", ", "'", "'") {
                 "(${it.id}) ${it.name} <${it.email}>"
@@ -34,13 +48,12 @@ abstract class AbstractHyperJar : Jar() {
         attrs["Hyper-Name"] = project.name
         attrs["Hyper-Version"] = project.version
         attrs["Hyper-Developers"] = developers
-        attrs["Hyper-Built-By"] = DateFormatUtils.format(Date(), "yyyy-MM-dd HH:mm:ssZ")
+        attrs["Hyper-Built-By"] = SimpleDateFormat("yyyy-MM-dd HH:mm:ssZ").format(Date())
         attrs["Hyper-Java-Version"] = project.extensions.getByType(JavaPluginExtension::class.java)
             .targetCompatibility.majorVersion
         attrs += attributes
         attributes.clear()
         manifest.attributes(attrs)
-        super.copy()
     }
 
     companion object {

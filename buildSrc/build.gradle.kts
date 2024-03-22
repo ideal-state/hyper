@@ -1,8 +1,10 @@
+import org.gradle.jvm.tasks.Jar
 import java.util.*
 
 plugins {
     id("java-gradle-plugin")
     kotlin("jvm") version "1.9.20"
+    id("org.jetbrains.dokka") version "1.9.20"
 }
 
 group = "team.idealstate.hyper"
@@ -37,8 +39,17 @@ repositories {
 dependencies {
     implementation("org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlinVersion")
     implementation("org.jetbrains.dokka:dokka-gradle-plugin:$kotlinVersion")
-    implementation("org.apache.commons:commons-lang3:3.14.0")
     val jacksonVersion = "2.17.0"
     implementation("com.fasterxml.jackson.dataformat:jackson-dataformat-toml:$jacksonVersion")
     implementation("com.fasterxml.jackson.module:jackson-module-kotlin:$jacksonVersion")
+}
+
+tasks.create<Jar>("sourcesJar") {
+    archiveClassifier.set("sources")
+    from(sourceSets.main.get().allSource)
+}
+
+tasks.create<Jar>("docJar") {
+    archiveClassifier.set("javadoc")
+    from(tasks.dokkaHtml)
 }

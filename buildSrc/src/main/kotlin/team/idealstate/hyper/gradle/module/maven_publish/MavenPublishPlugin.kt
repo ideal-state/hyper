@@ -1,3 +1,20 @@
+/*
+ *    hyper-gradle-plugin
+ *    Copyright [2024] [ideal-state]
+ *
+ *    Licensed under the Apache License, Version 2.0 (the "License");
+ *    you may not use this file except in compliance with the License.
+ *    You may obtain a copy of the License at
+ *
+ *        http://www.apache.org/licenses/LICENSE-2.0
+ *
+ *    Unless required by applicable law or agreed to in writing, software
+ *    distributed under the License is distributed on an "AS IS" BASIS,
+ *    WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ *    See the License for the specific language governing permissions and
+ *    limitations under the License.
+ */
+
 package team.idealstate.hyper.gradle.module.maven_publish
 
 import groovy.util.Node
@@ -44,70 +61,89 @@ open class MavenPublishPlugin : ConfigurablePlugin<Publication>(
             }
         }
         val tasks = project.tasks
-        val hyperMavenPublication =
-            publishingExtension.publications.create(
-                HYPER_PUBLICATION_NAME,
-                MavenPublication::class.java
-            ) { mavenPublication ->
-                mavenPublication.groupId = project.group.toString()
-                mavenPublication.artifactId = project.name
-                mavenPublication.version = project.version.toString()
+        val publications = publishingExtension.publications
+        publications.create(
+            HYPER_PUBLICATION_NAME,
+            MavenPublication::class.java
+        ) { mavenPublication ->
+            mavenPublication.groupId = project.group.toString()
+            mavenPublication.artifactId = project.name
+            mavenPublication.version = project.version.toString()
 
-                mavenPublication.pom { pom ->
-                    pom.name.set(project.name)
-                    publication.description?.let {
-                        pom.description.set(it)
-                    }
-                    pom.packaging = publication.packaging
-                    publication.url?.let {
-                        pom.url.set(it)
-                    }
-                    pom.inceptionYear.set(publication.inceptionYear)
+            mavenPublication.pom { pom ->
+                pom.name.set(project.name)
+                publication.description?.let {
+                    pom.description.set(it)
+                }
+                pom.packaging = publication.packaging
+                publication.url?.let {
+                    pom.url.set(it.toString())
+                }
+                pom.inceptionYear.set(publication.inceptionYear)
 
-                    publication.organization?.let {
-                        pom.organization { organization ->
-                            organization.name.set(it.name)
-                            organization.url.set(it.url)
+                publication.organization?.let {
+                    pom.organization { organization ->
+                        organization.name.set(it.name)
+                        organization.url.set(it.url.toString())
+                    }
+                }
+
+                build.developers.forEach {
+                    pom.developers { developers ->
+                        developers.developer { developer ->
+                            developer.id.set(it.id)
+                            developer.name.set(it.name)
+                            developer.email.set(it.email)
                         }
                     }
+                }
 
-                    build.developers.forEach {
-                        pom.developers { developers ->
-                            developers.developer { developer ->
-                                developer.id.set(it.id)
-                                developer.name.set(it.name)
-                                developer.email.set(it.email)
-                            }
+                publication.license?.let {
+                    pom.licenses { pomLicense ->
+                        pomLicense.license { license ->
+                            license.name.set(it.name)
+                            license.url.set(it.url.toString())
                         }
                     }
+                }
 
-                    publication.license?.let {
-                        pom.licenses { pomLicense ->
-                            pomLicense.license { license ->
-                                license.name.set(it.name)
-                                license.url.set(it.url)
-                            }
+                pom.scm { pomScm ->
+                    val it = publication.scm
+                    pomScm.url.set(it.url.toString())
+                    pomScm.connection.set(it.connection.toString())
+                    pomScm.developerConnection.set(it.developerConnection.toString())
+                }
+
+                pom.withXml { xml ->
+                    var dependenciesNode: Node? = null
+                    val compileDependencyIds = mutableSetOf<String>()
+                    var scope = "compile"
+                    for (dependency in
+                    JavaPlugin.getDependencies(project.configurations.getByName(JavaPlugin.COMPILE_CLASSPATH))
+                    ) {
+                        val group = dependency["group"]!!
+                        val name = dependency["name"]!!
+                        val version = dependency["version"]!!
+                        val id = "${group}:${name}:${version}"
+                        if (dependenciesNode == null) {
+                            dependenciesNode = xml.asNode().appendNode("dependencies")
                         }
+                        val dependencyNode = dependenciesNode!!.appendNode("dependency")
+                        dependencyNode.appendNode("groupId", group)
+                        dependencyNode.appendNode("artifactId", name)
+                        dependencyNode.appendNode("version", version)
+                        dependencyNode.appendNode("scope", scope)
+                        compileDependencyIds.add(id)
                     }
-
-                    pom.scm { pomScm ->
-                        val it = publication.scm
-                        pomScm.url.set(it.url)
-                        pomScm.connection.set(it.connection)
-                        pomScm.developerConnection.set(it.developerConnection)
-                    }
-
-                    pom.withXml { xml ->
-                        var dependenciesNode: Node? = null
-                        val compileDependencyIds = mutableSetOf<String>()
-                        var scope = "compile"
-                        for (dependency in
-                        JavaPlugin.getDependencies(project.configurations.getByName(JavaPlugin.COMPILE_CLASSPATH))
-                        ) {
-                            val group = dependency["group"]!!
-                            val name = dependency["name"]!!
-                            val version = dependency["version"]!!
-                            val id = "${group}:${name}:${version}"
+                    scope = "runtime"
+                    for (dependency in
+                    JavaPlugin.getDependencies(project.configurations.getByName(JavaPlugin.RUNTIME_CLASSPATH))
+                    ) {
+                        val group = dependency["group"]!!
+                        val name = dependency["name"]!!
+                        val version = dependency["version"]!!
+                        val id = "${group}:${name}:${version}"
+                        if (!compileDependencyIds.contains(id)) {
                             if (dependenciesNode == null) {
                                 dependenciesNode = xml.asNode().appendNode("dependencies")
                             }
@@ -118,44 +154,25 @@ open class MavenPublishPlugin : ConfigurablePlugin<Publication>(
                             dependencyNode.appendNode("scope", scope)
                             compileDependencyIds.add(id)
                         }
-                        scope = "runtime"
-                        for (dependency in
-                        JavaPlugin.getDependencies(project.configurations.getByName(JavaPlugin.RUNTIME_CLASSPATH))
-                        ) {
-                            val group = dependency["group"]!!
-                            val name = dependency["name"]!!
-                            val version = dependency["version"]!!
-                            val id = "${group}:${name}:${version}"
-                            if (!compileDependencyIds.contains(id)) {
-                                if (dependenciesNode == null) {
-                                    dependenciesNode = xml.asNode().appendNode("dependencies")
-                                }
-                                val dependencyNode = dependenciesNode!!.appendNode("dependency")
-                                dependencyNode.appendNode("groupId", group)
-                                dependencyNode.appendNode("artifactId", name)
-                                dependencyNode.appendNode("version", version)
-                                dependencyNode.appendNode("scope", scope)
-                                compileDependencyIds.add(id)
-                            }
-                        }
                     }
                 }
-
-                if (publication.packaging == "jar") {
-                    mavenPublication.artifact(tasks.named(HyperSourcesJar.NAME))
-                    mavenPublication.artifact(tasks.named(HyperDocJar.NAME))
-                    mavenPublication.artifact(tasks.named(HyperJar.NAME))
-                } else {
-                    throw IllegalArgumentException("不支持的打包类型 '$publication.packaging'")
-                }
             }
-        tryConfigureSigning(hyperMavenPublication)
+
+            if (publication.packaging == "jar") {
+                mavenPublication.artifact(tasks.named(HyperSourcesJar.NAME))
+                mavenPublication.artifact(tasks.named(HyperDocJar.NAME))
+                mavenPublication.artifact(tasks.named(HyperJar.NAME))
+            } else {
+                throw IllegalArgumentException("不支持的打包类型 '$publication.packaging'")
+            }
+        }
+        tryConfigureSigning(*publications.toTypedArray())
         tasks.create(HyperPublish.NAME, HyperPublish::class.java) {
             it.dependsOn(REAL_PUBLISH_TASK_ID)
         }
     }
 
-    private fun tryConfigureSigning(vararg publications: MavenPublication) {
+    private fun tryConfigureSigning(vararg publications: org.gradle.api.publish.Publication) {
         val executable = project.property("signing.gnupg.executable") as String?
         val keyName = project.property("signing.gnupg.keyName") as String?
         val passphrase = project.property("signing.gnupg.passphrase") as String?

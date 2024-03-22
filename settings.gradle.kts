@@ -1,3 +1,7 @@
+includeBuild("buildSrc") {
+    name = "build-src"
+}
+
 rootProject.name = "hyper"
 
 pluginManagement {
@@ -56,6 +60,7 @@ fun Settings.includeModules(modules: String = "modules") {
         throw IllegalStateException("模块目录必须是文件夹类型")
     }
     val modulesPath = modulesDirectory.absolutePath
+    println()
     println("> Modules: $modules")
     val buildScripts = findBuildScripts(modulesDirectory)
     val prefixLength = modulesPath.length - modules.length - 1

@@ -9,6 +9,6 @@ subprojects {
     }
 
     apply {
-        plugin("team.idealstate.hyper.gradle.plugin")
+//        plugin("team.idealstate.hyper.gradle.plugin")
     }
 }
