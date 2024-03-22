@@ -13,6 +13,12 @@
 
 ------------------------------------------------------------------------------
 
+<a href="https://github.com/ideal-state/hyper/graphs/contributors">
+  <img src="https://contrib.rocks/image?repo=ideal-state/hyper" alt="contributor" width="36px" height="auto" />
+</a>
+
+------------------------------------------------------------------------------
+
 > `hyper-core` 一些基础工具类和封装
 > 
 > （断言、字符串、资源、反射、集合、编码、加密等）；
