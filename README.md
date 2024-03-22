@@ -88,4 +88,4 @@ cd ./hyper
 
 ### 怎样成为贡献者
 
-在贡献之前，你需要了解[相应的规范](https://github.com/ideal-state)。
+在贡献之前，你需要了解[相应的规范](https://github.com/ideal-state/.github/blob/main/profile/README.md)。
