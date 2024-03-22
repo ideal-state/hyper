@@ -70,12 +70,12 @@ dependencies {
 ### 如何构建
 
 ```shell
-# 1
+# 1. 克隆项目到本地
 git clone https://github.com/ideal-state/hyper.git
-# 2
-cd hyper
-# 3
-gradlew :hyperJar
+# 2. 进入项目根目录
+cd ./hyper
+# 3. 构建项目
+./gradlew hyperJar
 ```
 
 ------------------------------------------------------------------------------
