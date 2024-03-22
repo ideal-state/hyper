@@ -1,5 +1,5 @@
 /*
- *    hyper-commons
+ *    hyper-core
  *    Copyright [2024] [ideal-state]
  *
  *    Licensed under the Apache License, Version 2.0 (the "License");
@@ -15,10 +15,10 @@
  *    limitations under the License.
  */
 
-package team.idealstate.hyper.commons.crypto;
+package team.idealstate.hyper.core.common.crypto;
 
 import org.jetbrains.annotations.NotNull;
-import team.idealstate.hyper.commons.codec.Base64Utils;
+import team.idealstate.hyper.core.common.codec.Base64Utils;
 
 import javax.crypto.BadPaddingException;
 import javax.crypto.Cipher;

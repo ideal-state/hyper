@@ -1,5 +1,5 @@
 /*
- *    hyper-commons
+ *    hyper-core
  *    Copyright [2024] [ideal-state]
  *
  *    Licensed under the Apache License, Version 2.0 (the "License");
@@ -15,9 +15,9 @@
  *    limitations under the License.
  */
 
-package team.idealstate.hyper.commons.language;
+package team.idealstate.hyper.core.common.language;
 
-import team.idealstate.hyper.commons.string.StringUtils;
+import team.idealstate.hyper.core.common.string.StringUtils;
 
 import java.util.Collection;
 import java.util.Map;
