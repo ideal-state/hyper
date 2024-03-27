@@ -1,0 +1,3 @@
+<component name="DependencyValidationManager">
+  <scope name="hyper-command-impl" pattern="file[hyper.modules.command.hyper-command-impl.*]:*.java" />
+</component>

@@ -5,9 +5,10 @@
       <element module="hyper-gradle-plugin" copyright="[Apache2.0]hyper-gradle-plugin" />
       <element module="hyper-minecraft-spigot-framework" copyright="[GPL3.0]hyper-minecraft-spigot-framework" />
       <element module="hyper-context" copyright="[Apache2.0]hyper-context" />
-      <element module="hyper-command" copyright="[Apache2.0]hyper-command" />
       <element module="hyper-event-bus" copyright="[Apache2.0]hyper-event-bus" />
       <element module="hyper-library-loader" copyright="[Apache2.0]hyper-library-loader" />
+      <element module="hyper-command-api" copyright="[Apache2.0]hyper-command-api" />
+      <element module="hyper-command-impl" copyright="[Apache2.0]hyper-command-impl" />
     </module2copyright>
   </settings>
 </component>
