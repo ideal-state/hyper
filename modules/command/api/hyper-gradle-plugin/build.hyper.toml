@@ -3,7 +3,7 @@
 # 修订号（revision）：当有漏洞被修复时，修订号 +1
 # 版本号组成：major.minor.revision
 [version]
-major = 1
+major = 2
 minor = 0
 revision = 0
 

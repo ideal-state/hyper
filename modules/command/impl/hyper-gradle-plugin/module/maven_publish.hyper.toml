@@ -1,0 +1,24 @@
+# 描述（可选）
+description = ""
+# 主页地址（可选）
+url = "https://github.com/ideal-state/hyper"
+# 打包类型
+packaging = "jar"
+# 起始年份
+inceptionYear = "2024"
+
+# 组织信息（可选）
+[organization]
+name = "ideal-state"
+url = "https://github.com/ideal-state"
+
+# 版本控制信息
+[scm]
+url = "https://github.com/ideal-state/hyper"
+connection = "scm:git:git://github.com/ideal-state/hyper"
+developerConnection = "scm:git:git://github.com/ideal-state/hyper"
+
+# 许可证信息（可选）
+[license]
+name = "Apache License 2.0"
+url = "https://www.apache.org/licenses/LICENSE-2.0"
