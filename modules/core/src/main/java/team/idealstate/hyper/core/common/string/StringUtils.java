@@ -17,6 +17,11 @@
 
 package team.idealstate.hyper.core.common.string;
 
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
+import team.idealstate.hyper.core.common.AssertUtils;
+import team.idealstate.hyper.core.common.object.ObjectUtils;
+
 /**
  * <p>StringUtils</p>
  *
@@ -28,7 +33,25 @@ package team.idealstate.hyper.core.common.string;
  */
 public abstract class StringUtils {
 
-    public static boolean isBlank(CharSequence charSequence) {
+    public static boolean isEmpty(@NotNull CharSequence charSequence) {
+        AssertUtils.notNull(charSequence, "无效的字符序列");
+        return charSequence.length() == 0;
+    }
+
+    public static boolean isNullOrEmpty(@Nullable CharSequence charSequence) {
+        return ObjectUtils.isNull(charSequence) || charSequence.length() == 0;
+    }
+
+    public static boolean isNotEmpty(@NotNull CharSequence charSequence) {
+        return !isEmpty(charSequence);
+    }
+
+    public static boolean isNotNullOrEmpty(@Nullable CharSequence charSequence) {
+        return !isNullOrEmpty(charSequence);
+    }
+
+    public static boolean isBlank(@NotNull CharSequence charSequence) {
+        AssertUtils.notNull(charSequence, "无效的字符序列");
         if (isEmpty(charSequence)) {
             return true;
         }
@@ -41,22 +64,34 @@ public abstract class StringUtils {
         return true;
     }
 
-    public static boolean isNotBlank(CharSequence charSequence) {
+    public static boolean isNullOrBlank(@Nullable CharSequence charSequence) {
+        if (isNullOrEmpty(charSequence)) {
+            return true;
+        }
+        assert charSequence != null;
+        final int length = charSequence.length();
+        for (int i = 0; i < length; i++) {
+            if (!Character.isWhitespace(charSequence.charAt(i))) {
+                return false;
+            }
+        }
+        return true;
+    }
+
+    public static boolean isNotBlank(@NotNull CharSequence charSequence) {
+        AssertUtils.notNull(charSequence, "无效的字符序列");
         return !isBlank(charSequence);
     }
 
-    public static boolean isEmpty(CharSequence charSequence) {
-        return charSequence == null || charSequence.length() == 0;
+    public static boolean isNotNullOrBlank(@Nullable CharSequence charSequence) {
+        return !isNullOrBlank(charSequence);
     }
 
-    public static boolean isNotEmpty(CharSequence charSequence) {
-        return !isEmpty(charSequence);
-    }
-
-    public static boolean isNumeric(CharSequence charSequence) {
-        if (isBlank(charSequence)) {
+    public static boolean isNumeric(@Nullable CharSequence charSequence) {
+        if (isNullOrBlank(charSequence)) {
             return false;
         }
+        assert charSequence != null;
         int length = charSequence.length();
         char c = charSequence.charAt(0);
         if (length == 1) {
@@ -88,9 +123,10 @@ public abstract class StringUtils {
     }
 
     public static boolean isIntegral(CharSequence charSequence) {
-        if (isBlank(charSequence)) {
+        if (isNullOrBlank(charSequence)) {
             return false;
         }
+        assert charSequence != null;
         int length = charSequence.length();
         char c = charSequence.charAt(0);
         if (length == 1) {
@@ -113,10 +149,11 @@ public abstract class StringUtils {
         return true;
     }
 
-    public static int countMatches(CharSequence charSequence, char matched) {
-        if (isEmpty(charSequence)) {
+    public static int countMatches(@Nullable CharSequence charSequence, char matched) {
+        if (isNullOrEmpty(charSequence)) {
             return 0;
         }
+        assert charSequence != null;
         final int stringLen = charSequence.length();
         int count = 0;
         for (int i = 0; i < stringLen; i++) {
@@ -128,10 +165,12 @@ public abstract class StringUtils {
         return count;
     }
 
-    public static int countMatches(CharSequence charSequence, CharSequence matched) {
-        if (isEmpty(charSequence) || isEmpty(matched)) {
+    public static int countMatches(@Nullable CharSequence charSequence, @Nullable CharSequence matched) {
+        if (isNullOrEmpty(charSequence) || isNullOrEmpty(matched)) {
             return 0;
         }
+        assert charSequence != null;
+        assert matched != null;
         final int stringLen = charSequence.length();
         final int matchedLen = matched.length();
         if (stringLen < matchedLen) {

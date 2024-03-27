@@ -18,9 +18,11 @@
 package team.idealstate.hyper.core.common.reflect;
 
 import org.jetbrains.annotations.NotNull;
-import team.idealstate.hyper.core.common.language.AssertUtils;
+import team.idealstate.hyper.core.common.AssertUtils;
+import team.idealstate.hyper.core.common.template.ListUtils;
 
 import java.lang.reflect.Method;
+import java.lang.reflect.Modifier;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -30,8 +32,8 @@ import java.util.List;
  * <p>创建于 2024/2/10 14:30</p>
  *
  * @author ketikai
- * @version 1.0.2
- * @since 1.0.2
+ * @version 1.0.0
+ * @since 1.0.0
  */
 public abstract class MethodUtils {
 
@@ -264,5 +266,39 @@ public abstract class MethodUtils {
             }
         }
         throw new IllegalArgumentException("无效的方法描述 '" + methodDesc + "'");
+    }
+
+    public static List<Method> getAncestorMethods(@NotNull Method subMethod) {
+        AssertUtils.notNull(subMethod, "无效的类");
+        Class<?> subclass = subMethod.getDeclaringClass();
+        List<Class<?>> ancestorClasses = ClassUtils.getAncestorClasses(subclass);
+        String packageName = subclass.getPackage().getName();
+        String methodName = subMethod.getName();
+        Class<?>[] methodParameterTypes = subMethod.getParameterTypes();
+        Class<?> methodReturnType = subMethod.getReturnType();
+        List<Method> ret = ListUtils.listOf();
+        for (Class<?> ancestorClass : ancestorClasses) {
+            Method ancestorMethod;
+            try {
+                ancestorMethod = ancestorClass.getDeclaredMethod(methodName, methodParameterTypes);
+            } catch (NoSuchMethodException e) {
+                continue;
+            }
+            if (!ancestorMethod.getReturnType().isAssignableFrom(methodReturnType)) {
+                continue;
+            }
+            int modifiers = ancestorMethod.getModifiers();
+            if (Modifier.isPrivate(modifiers)) {
+                continue;
+            }
+            if (Modifier.isPublic(modifiers) || Modifier.isProtected(modifiers)) {
+                ret.add(ancestorMethod);
+            } else {
+                if (packageName.equals(ancestorClass.getPackage().getName())) {
+                    ret.add(ancestorMethod);
+                }
+            }
+        }
+        return ret;
     }
 }

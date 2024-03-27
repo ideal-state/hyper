@@ -18,7 +18,7 @@
 package team.idealstate.hyper.core.common.math;
 
 import org.jetbrains.annotations.NotNull;
-import team.idealstate.hyper.core.common.language.AssertUtils;
+import team.idealstate.hyper.core.common.AssertUtils;
 
 import java.math.BigInteger;
 import java.util.Map;
@@ -30,8 +30,8 @@ import java.util.concurrent.ConcurrentHashMap;
  * <p>创建于 2024/1/28 13:15</p>
  *
  * @author ketikai
- * @version 1.0.2
- * @since 1.0.2
+ * @version 1.0.0
+ * @since 1.0.0
  */
 public abstract class BigIntegerUtils {
     private static final Map<String, BigInteger> CACHE = new ConcurrentHashMap<>(128, 0.6F);

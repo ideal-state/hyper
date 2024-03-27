@@ -15,10 +15,10 @@
  *    limitations under the License.
  */
 
-package team.idealstate.hyper.core.common.resource;
+package team.idealstate.hyper.core.common.asset;
 
 import org.jetbrains.annotations.NotNull;
-import team.idealstate.hyper.core.common.language.AssertUtils;
+import team.idealstate.hyper.core.common.AssertUtils;
 
 import java.io.*;
 import java.net.URI;
@@ -33,18 +33,18 @@ import java.util.jar.JarFile;
  * <p>创建于 2024/2/7 3:54</p>
  *
  * @author ketikai
- * @version 1.0.2
- * @since 1.0.2
+ * @version 1.0.0
+ * @since 1.0.0
  */
 public abstract class JarUtils {
 
     @NotNull
-    public static File copy(@NotNull Class<?> sourceClass, @NotNull String resourcePath, @NotNull File destinationDirectory) {
-        return copy(sourceClass, resourcePath, destinationDirectory, false);
+    public static File copyTo(@NotNull Class<?> sourceClass, @NotNull String resourcePath, @NotNull File destinationDirectory) {
+        return copyTo(sourceClass, resourcePath, destinationDirectory, false);
     }
 
     @NotNull
-    public static File copy(@NotNull Class<?> sourceClass, @NotNull String resourcePath, @NotNull File destinationDirectory, boolean replaceExisting) {
+    public static File copyTo(@NotNull Class<?> sourceClass, @NotNull String resourcePath, @NotNull File destinationDirectory, boolean replaceExisting) {
         AssertUtils.notNull(sourceClass, "来源类型不允许为 null");
         AssertUtils.notBlank(resourcePath, "资源路径不允许为纯空白字符串或 null");
         AssertUtils.notNull(destinationDirectory, "目标目录不允许为 null");

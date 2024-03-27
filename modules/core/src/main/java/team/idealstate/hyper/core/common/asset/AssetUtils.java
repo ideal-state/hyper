@@ -15,17 +15,15 @@
  *    limitations under the License.
  */
 
-package team.idealstate.hyper.core.common.resource;
+package team.idealstate.hyper.core.common.asset;
 
 import org.jetbrains.annotations.NotNull;
-import team.idealstate.hyper.core.common.language.AssertUtils;
+import team.idealstate.hyper.core.common.AssertUtils;
 
 import java.io.File;
 import java.io.IOException;
 import java.net.URI;
 import java.net.URISyntaxException;
-import java.util.HashMap;
-import java.util.Map;
 import java.util.jar.Attributes;
 import java.util.jar.JarFile;
 import java.util.jar.Manifest;
@@ -41,8 +39,6 @@ import java.util.jar.Manifest;
  */
 public abstract class AssetUtils {
 
-    private static final Map<Class<?>, String> NAME_CACHE = new HashMap<>(16, 0.6F);
-
     @NotNull
     public static String asset(@NotNull Class<?> sourceClass, @NotNull String assetPath) {
         AssertUtils.notNull(sourceClass, "无效的来源类型");
@@ -51,32 +47,25 @@ public abstract class AssetUtils {
     }
 
     private static String getName(Class<?> sourceClass) {
-        String name = NAME_CACHE.get(sourceClass);
-        if (name == null) {
-            URI uri;
-            try {
-                uri = sourceClass.getProtectionDomain().getCodeSource().getLocation().toURI();
-            } catch (URISyntaxException e) {
-                throw new RuntimeException(e);
-            }
-            try (JarFile jarFile = new JarFile(new File(uri))) {
-                Manifest manifest = jarFile.getManifest();
-                if (manifest != null) {
-                    Attributes mainAttributes = manifest.getMainAttributes();
-                    if (mainAttributes != null) {
-                        name = mainAttributes.getValue("Hyper-Name");
-                        if (name != null) {
-                            NAME_CACHE.put(sourceClass, name);
-                        }
-                    }
+        String name = null;
+        URI uri;
+        try {
+            uri = sourceClass.getProtectionDomain().getCodeSource().getLocation().toURI();
+        } catch (URISyntaxException e) {
+            throw new RuntimeException(e);
+        }
+        try (JarFile jarFile = new JarFile(new File(uri))) {
+            Manifest manifest = jarFile.getManifest();
+            if (manifest != null) {
+                Attributes mainAttributes = manifest.getMainAttributes();
+                if (mainAttributes != null) {
+                    name = mainAttributes.getValue("Hyper-Name");
                 }
-            } catch (IOException e) {
-                throw new RuntimeException(e);
             }
+        } catch (IOException e) {
+            throw new RuntimeException(e);
         }
-        if (name == null) {
-            throw new IllegalArgumentException("无效的工件名称");
-        }
+        AssertUtils.notBlank(name, "无效的工件名称");
         return name;
     }
 }

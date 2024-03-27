@@ -19,11 +19,11 @@ package team.idealstate.hyper.core.common.template;
 
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
+import team.idealstate.hyper.core.common.AssertUtils;
+import team.idealstate.hyper.core.common.object.ObjectUtils;
 
 import java.util.Collection;
 import java.util.Collections;
-import java.util.List;
-import java.util.Set;
 
 /**
  * <p>CollectionUtils</p>
@@ -34,20 +34,64 @@ import java.util.Set;
  * @version 1.0.0
  * @since 1.0.0
  */
+@SuppressWarnings({"rawtypes"})
 public abstract class CollectionUtils {
 
     @NotNull
-    public static <E> List<E> promise(@Nullable List<E> collection) {
-        return collection == null ? Collections.emptyList() : collection;
+    public static <E> Collection<E> emptyIfNull(@Nullable Collection<E> collection) {
+        return collection == null ? emptyCollection() : collection;
     }
 
     @NotNull
-    public static <E> Set<E> promise(@Nullable Set<E> collection) {
-        return collection == null ? Collections.emptySet() : collection;
+    public static <E> Collection<E> defaultIfEmpty(@NotNull Collection<E> collection, @NotNull Collection<E> def) {
+        AssertUtils.notNull(collection, "无效的合集");
+        AssertUtils.notNull(def, "无效的默认值");
+        return isEmpty(collection) ? def : collection;
     }
 
     @NotNull
-    public static <E> Collection<E> promise(@Nullable Collection<E> collection) {
-        return collection == null ? Collections.emptyList() : collection;
+    public static <E> Collection<E> defaultIfNullOrEmpty(@Nullable Collection<E> collection, @NotNull Collection<E> def) {
+        AssertUtils.notNull(def, "无效的默认值");
+        if (isNullOrEmpty(collection)) {
+            return def;
+        } else {
+            assert collection != null;
+            return collection;
+        }
+    }
+
+    public static boolean isEmpty(@NotNull Collection collection) {
+        AssertUtils.notNull(collection, "无效的合集");
+        return collection.isEmpty();
+    }
+
+    public static boolean isNullOrEmpty(@Nullable Collection collection) {
+        return ObjectUtils.isNull(collection) || collection.isEmpty();
+    }
+
+    public static boolean isNotEmpty(@NotNull Collection collection) {
+        AssertUtils.notNull(collection, "无效的合集");
+        return !collection.isEmpty();
+    }
+
+    public static boolean isNotNullOrEmpty(@Nullable Collection collection) {
+        return ObjectUtils.isNotNull(collection) && !collection.isEmpty();
+    }
+
+    @NotNull
+    public static <E> Collection<E> emptyCollection() {
+        return Collections.emptyList();
+    }
+
+    @SafeVarargs
+    public static <T> boolean addAll(@NotNull Collection<? super T> collection, T... elements) {
+        AssertUtils.notNull(collection, "无效的合集");
+        return Collections.addAll(collection, elements);
+    }
+
+    public static <T> boolean addAll(@NotNull Collection<? super T> into, @NotNull Collection<? extends T> from) {
+        AssertUtils.notNull(into, "无效的合集");
+        AssertUtils.notNull(from, "无效的合集");
+        return into.addAll(from);
     }
 }

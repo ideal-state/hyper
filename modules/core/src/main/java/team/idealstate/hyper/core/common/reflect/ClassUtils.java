@@ -18,12 +18,10 @@
 package team.idealstate.hyper.core.common.reflect;
 
 import org.jetbrains.annotations.NotNull;
-import team.idealstate.hyper.core.common.language.AssertUtils;
+import team.idealstate.hyper.core.common.AssertUtils;
+import team.idealstate.hyper.core.common.template.ListUtils;
 
-import java.util.Arrays;
-import java.util.Collections;
-import java.util.HashSet;
-import java.util.Set;
+import java.util.*;
 
 /**
  * <p>ClassUtils</p>
@@ -50,6 +48,27 @@ public abstract class ClassUtils {
                         "V", "Z", "C", "B", "S", "I", "F", "J", "D"
                 ))
         );
+    }
+
+    public static List<Class<?>> getAncestorClasses(@NotNull Class<?> subclass) {
+        AssertUtils.notNull(subclass, "无效的类");
+        List<Class<?>> ret = ListUtils.linkedListOf();
+        Deque<Class<?>> subclasses = new ArrayDeque<>(16);
+        subclasses.add(subclass);
+        while ((subclass = subclasses.poll()) != null) {
+            Class<?> superclass = subclass.getSuperclass();
+            if (superclass != null) {
+                subclasses.add(superclass);
+            }
+            for (Class<?> anInterface : subclass.getInterfaces()) {
+                subclasses.remove(anInterface);
+                subclasses.add(anInterface);
+            }
+            ret.remove(subclass);
+            ret.add(subclass);
+        }
+        ret.remove(0);
+        return ret;
     }
 
     @NotNull
