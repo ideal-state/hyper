@@ -17,7 +17,7 @@
 
 package team.idealstate.hyper.command.api;
 
-import org.jetbrains.annotations.NotNull;
+import team.idealstate.hyper.annotation.lang.NotNull;
 import team.idealstate.hyper.command.api.exception.CommandException;
 
 import java.util.List;

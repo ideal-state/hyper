@@ -17,7 +17,7 @@
 
 package team.idealstate.hyper.command.api.std.builder;
 
-import org.jetbrains.annotations.NotNull;
+import team.idealstate.hyper.annotation.lang.NotNull;
 import team.idealstate.hyper.command.api.CommandLine;
 import team.idealstate.hyper.command.api.builder.CommandLineBuilder;
 import team.idealstate.hyper.command.api.builder.CommandUnitBuilder;

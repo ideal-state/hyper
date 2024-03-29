@@ -17,7 +17,7 @@
 
 package team.idealstate.hyper.core.common.reflect;
 
-import org.jetbrains.annotations.NotNull;
+import team.idealstate.hyper.annotation.lang.NotNull;
 import team.idealstate.hyper.core.common.AssertUtils;
 import team.idealstate.hyper.core.common.template.ListUtils;
 

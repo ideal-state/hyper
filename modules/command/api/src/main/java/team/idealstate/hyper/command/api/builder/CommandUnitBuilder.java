@@ -17,8 +17,8 @@
 
 package team.idealstate.hyper.command.api.builder;
 
-import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
+import team.idealstate.hyper.annotation.lang.NotNull;
+import team.idealstate.hyper.annotation.lang.Nullable;
 import team.idealstate.hyper.command.api.CommandUnit;
 import team.idealstate.hyper.command.api.builder.exception.NoSuchParentException;
 import team.idealstate.hyper.command.api.unit.*;

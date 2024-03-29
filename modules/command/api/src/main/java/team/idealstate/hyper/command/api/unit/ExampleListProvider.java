@@ -17,7 +17,7 @@
 
 package team.idealstate.hyper.command.api.unit;
 
-import org.jetbrains.annotations.NotNull;
+import team.idealstate.hyper.annotation.lang.NotNull;
 import team.idealstate.hyper.command.api.CommandContext;
 
 import java.util.Collections;

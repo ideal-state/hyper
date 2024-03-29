@@ -17,7 +17,7 @@
 
 package team.idealstate.hyper.command.impl.factory;
 
-import org.jetbrains.annotations.NotNull;
+import team.idealstate.hyper.annotation.lang.NotNull;
 import team.idealstate.hyper.command.api.CommandUnit;
 import team.idealstate.hyper.command.api.factory.CommandUnitFactory;
 import team.idealstate.hyper.command.impl.CommandUnitImpl;

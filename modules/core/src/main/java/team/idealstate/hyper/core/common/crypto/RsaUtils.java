@@ -17,7 +17,7 @@
 
 package team.idealstate.hyper.core.common.crypto;
 
-import org.jetbrains.annotations.NotNull;
+import team.idealstate.hyper.annotation.lang.NotNull;
 import team.idealstate.hyper.core.common.codec.Base64Utils;
 
 import javax.crypto.BadPaddingException;

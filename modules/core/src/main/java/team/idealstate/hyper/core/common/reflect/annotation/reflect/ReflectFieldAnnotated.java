@@ -17,8 +17,8 @@
 
 package team.idealstate.hyper.core.common.reflect.annotation.reflect;
 
-import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
+import team.idealstate.hyper.annotation.lang.NotNull;
+import team.idealstate.hyper.annotation.lang.Nullable;
 
 import java.lang.annotation.Annotation;
 import java.lang.reflect.Field;

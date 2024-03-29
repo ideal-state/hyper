@@ -17,8 +17,8 @@
 
 package team.idealstate.hyper.core.common.object;
 
-import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
+import team.idealstate.hyper.annotation.lang.NotNull;
+import team.idealstate.hyper.annotation.lang.Nullable;
 import team.idealstate.hyper.core.common.AssertUtils;
 import team.idealstate.hyper.core.common.io.IOUtils;
 import team.idealstate.hyper.core.common.resource.ResourceUtils;
