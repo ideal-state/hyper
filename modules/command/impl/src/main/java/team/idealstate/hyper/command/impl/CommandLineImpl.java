@@ -189,7 +189,8 @@ public final class CommandLineImpl implements CommandLine {
     }
 
     @Override
-    public @NotNull CommandResult<List<String>> complete(@NotNull CommandContext context, @NotNull String[] arguments) throws CommandException {
+    @NotNull
+    public CommandResult<List<String>> complete(@NotNull CommandContext context, @NotNull String[] arguments) throws CommandException {
         AssertUtils.notNull(context, "无效的命令上下文");
         AssertUtils.notNull(arguments, "无效的命令行参数");
         CommandResult<List<String>> result = new CommandResult<>(CommandResult.Code.INVALID_COMMAND);
@@ -201,7 +202,8 @@ public final class CommandLineImpl implements CommandLine {
     }
 
     @Override
-    public @NotNull CommandResult<Boolean> execute(@NotNull CommandContext context, @NotNull String[] arguments) throws CommandException {
+    @NotNull
+    public CommandResult<Boolean> execute(@NotNull CommandContext context, @NotNull String[] arguments) throws CommandException {
         AssertUtils.notNull(context, "无效的命令上下文");
         AssertUtils.notNull(arguments, "无效的命令行参数");
         CommandResult<Boolean> result = new CommandResult<>(CommandResult.Code.INVALID_COMMAND);
@@ -237,7 +239,8 @@ public final class CommandLineImpl implements CommandLine {
     }
 
     @Override
-    public @NotNull List<CommandUnit> getCommandUnits() {
+    @NotNull
+    public List<CommandUnit> getCommandUnits() {
         if (MapUtils.isEmpty(commandUnits)) {
             return ListUtils.emptyList();
         }

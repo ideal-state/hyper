@@ -51,6 +51,7 @@ public abstract class MethodUtils {
         return stringBuilder.toString();
     }
 
+    @NotNull
     public static Class<?>[] getParamTypes(@NotNull String methodDesc) throws IllegalArgumentException, ClassNotFoundException {
         return getParamTypes(methodDesc, true, null);
     }
@@ -176,7 +177,6 @@ public abstract class MethodUtils {
                 Integer refTypeHeader = null;
                 Integer lastParamTypeFooter = null;
                 Integer returnTypeHeader = null;
-                List<Class<?>> paramTypes = new ArrayList<>(8);
                 Class<?> returnType = null;
                 for (int i = 1; i < length; i++) {
                     if (returnType != null) {
@@ -207,15 +207,11 @@ public abstract class MethodUtils {
                                 break START;
                             }
                             if (arrayDescHeader == null) {
-                                if (returnTypeHeader == null) {
-                                    paramTypes.add(ClassUtils.forDesc(methodDesc.substring(refTypeHeader + 1, i), initialize, classLoader));
-                                } else {
+                                if (returnTypeHeader != null) {
                                     returnType = ClassUtils.forDesc(methodDesc.substring(refTypeHeader + 1, i), initialize, classLoader);
                                 }
                             } else {
-                                if (returnTypeHeader == null) {
-                                    paramTypes.add(ClassUtils.forDesc(methodDesc.substring(arrayDescHeader, i + 1), initialize, classLoader));
-                                } else {
+                                if (returnTypeHeader != null) {
                                     returnType = ClassUtils.forDesc(methodDesc.substring(arrayDescHeader, i + 1), initialize, classLoader);
                                 }
                             }
@@ -242,15 +238,11 @@ public abstract class MethodUtils {
                                 break START;
                             }
                             if (arrayDescHeader == null) {
-                                if (returnTypeHeader == null) {
-                                    paramTypes.add(ClassUtils.forDesc(desc, initialize, classLoader));
-                                } else {
+                                if (returnTypeHeader != null) {
                                     returnType = ClassUtils.forDesc(desc, initialize, classLoader);
                                 }
                             } else {
-                                if (returnTypeHeader == null) {
-                                    paramTypes.add(ClassUtils.forDesc(methodDesc.substring(arrayDescHeader, i + 1), initialize, classLoader));
-                                } else {
+                                if (returnTypeHeader != null) {
                                     returnType = ClassUtils.forDesc(methodDesc.substring(arrayDescHeader, i + 1), initialize, classLoader);
                                 }
                             }

@@ -50,6 +50,7 @@ public abstract class ClassUtils {
         );
     }
 
+    @NotNull
     public static List<Class<?>> getAncestorClasses(@NotNull Class<?> subclass) {
         AssertUtils.notNull(subclass, "无效的类");
         List<Class<?>> ret = ListUtils.linkedListOf();

@@ -58,7 +58,8 @@ public abstract class RsaUtils {
         }
     }
 
-    public static byte[] encrypt(@NotNull Key key, byte[] data) {
+    @NotNull
+    public static byte[] encrypt(@NotNull Key key, @NotNull byte[] data) {
         try {
             Cipher cipher = Cipher.getInstance("RSA/ECB/PKCS1Padding");
             cipher.init(Cipher.ENCRYPT_MODE, key);
@@ -69,7 +70,8 @@ public abstract class RsaUtils {
         }
     }
 
-    public static byte[] decrypt(@NotNull Key key, byte[] data) {
+    @NotNull
+    public static byte[] decrypt(@NotNull Key key, @NotNull byte[] data) {
         try {
             Cipher cipher = Cipher.getInstance("RSA/ECB/PKCS1Padding");
             cipher.init(Cipher.DECRYPT_MODE, key);
@@ -80,16 +82,18 @@ public abstract class RsaUtils {
         }
     }
 
-    public static byte[] importKey(byte @NotNull [] key) {
+    @NotNull
+    public static byte[] importKey(@NotNull byte[] key) {
         return Base64Utils.decode(key);
     }
 
+    @NotNull
     public static byte[] exportKey(@NotNull Key key) {
         return Base64Utils.encode(key.getEncoded());
     }
 
     @NotNull
-    public static PublicKey generatePublicKey(byte[] key) {
+    public static PublicKey generatePublicKey(@NotNull byte[] key) {
         try {
             KeyFactory keyFactory = KeyFactory.getInstance("RSA");
             X509EncodedKeySpec publicKeySpec = new X509EncodedKeySpec(key);
@@ -100,7 +104,7 @@ public abstract class RsaUtils {
     }
 
     @NotNull
-    public static PrivateKey generatePrivateKey(byte[] key) {
+    public static PrivateKey generatePrivateKey(@NotNull byte[] key) {
         try {
             KeyFactory keyFactory = KeyFactory.getInstance("RSA");
             PKCS8EncodedKeySpec privateKeySpec = new PKCS8EncodedKeySpec(key);

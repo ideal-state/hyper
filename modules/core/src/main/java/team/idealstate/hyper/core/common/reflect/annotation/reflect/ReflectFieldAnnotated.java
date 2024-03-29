@@ -72,17 +72,20 @@ public class ReflectFieldAnnotated extends ReflectDeclaredAnnotated<Field> {
     }
 
     @Override
-    public <A extends Annotation> @Nullable A getAnnotation(@NotNull Class<A> annotationType) {
+    @Nullable
+    public <A extends Annotation> A getAnnotation(@NotNull Class<A> annotationType) {
         return getDeclaredAnnotation(annotationType);
     }
 
     @Override
-    public <A extends Annotation> A @NotNull [] getAnnotations(@NotNull Class<A> annotationType) {
+    @NotNull
+    public <A extends Annotation> A[] getAnnotations(@NotNull Class<A> annotationType) {
         return getDeclaredAnnotations(annotationType);
     }
 
     @Override
-    public Annotation @NotNull [] getAnnotations() {
+    @NotNull
+    public Annotation[] getAnnotations() {
         return getDeclaredAnnotations();
     }
 }

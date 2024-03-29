@@ -38,7 +38,7 @@ public class CommandDetail {
 
     private String[] arguments;
 
-    public CommandDetail(@NotNull String name, String @NotNull [] arguments) {
+    public CommandDetail(@NotNull String name, @NotNull String[] arguments) {
         AssertUtils.notBlank(name, "无效的命令名称");
         AssertUtils.notNull(arguments, "无效的命令参数数组");
         this.name = name;
@@ -55,12 +55,12 @@ public class CommandDetail {
         this.name = name;
     }
 
-
-    public String @NotNull [] getArguments() {
+    @NotNull
+    public String[] getArguments() {
         return arguments;
     }
 
-    public void setArguments(String @NotNull [] arguments) {
+    public void setArguments(@NotNull String[] arguments) {
         AssertUtils.notNull(arguments, "无效的命令参数数组");
         this.arguments = arguments;
     }

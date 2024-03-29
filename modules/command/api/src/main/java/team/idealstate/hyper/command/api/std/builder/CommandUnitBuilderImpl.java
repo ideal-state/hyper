@@ -65,12 +65,14 @@ final class CommandUnitBuilderImpl implements CommandUnitBuilder {
     }
 
     @Override
-    public @NotNull CommandLineBuilder root() {
+    @NotNull
+    public CommandLineBuilder root() {
         return root;
     }
 
     @Override
-    public @NotNull CommandUnitBuilder parent() throws NoSuchParentException {
+    @NotNull
+    public CommandUnitBuilder parent() throws NoSuchParentException {
         if (ObjectUtils.isNull(parent)) {
             throw new NoSuchParentException();
         }
@@ -78,12 +80,14 @@ final class CommandUnitBuilderImpl implements CommandUnitBuilder {
     }
 
     @Override
-    public @NotNull CommandUnitBuilder and() throws NoSuchParentException {
+    @NotNull
+    public CommandUnitBuilder and() throws NoSuchParentException {
         return parent();
     }
 
     @Override
-    public @NotNull CommandUnitBuilder name(@NotNull String name) {
+    @NotNull
+    public CommandUnitBuilder name(@NotNull String name) {
         AssertUtils.notBlank(name, "无效的命令单元名称");
         if (ObjectUtils.isNull(commandUnit)) {
             this.commandUnit = commandUnitFactory.createCommandUnit(name);
@@ -94,7 +98,8 @@ final class CommandUnitBuilderImpl implements CommandUnitBuilder {
     }
 
     @Override
-    public @NotNull CommandUnitBuilder description(@NotNull String description) {
+    @NotNull
+    public CommandUnitBuilder description(@NotNull String description) {
         throwInstanceIfNull();
         AssertUtils.notNull(description, "无效的命令单元描述");
         commandUnit.setDescription(description);
@@ -102,42 +107,48 @@ final class CommandUnitBuilderImpl implements CommandUnitBuilder {
     }
 
     @Override
-    public @NotNull CommandUnitBuilder actionInterceptor(@Nullable ActionInterceptor actionInterceptor) {
+    @NotNull
+    public CommandUnitBuilder actionInterceptor(@Nullable ActionInterceptor actionInterceptor) {
         throwInstanceIfNull();
         commandUnit.setActionInterceptor(actionInterceptor);
         return this;
     }
 
     @Override
-    public @NotNull CommandUnitBuilder argumentAcceptor(@Nullable ArgumentAcceptor argumentAcceptor) {
+    @NotNull
+    public CommandUnitBuilder argumentAcceptor(@Nullable ArgumentAcceptor argumentAcceptor) {
         throwInstanceIfNull();
         commandUnit.setArgumentAcceptor(argumentAcceptor);
         return this;
     }
 
     @Override
-    public @NotNull CommandUnitBuilder exampleListProvider(@Nullable ExampleListProvider exampleListProvider) {
+    @NotNull
+    public CommandUnitBuilder exampleListProvider(@Nullable ExampleListProvider exampleListProvider) {
         throwInstanceIfNull();
         commandUnit.setExampleListProvider(exampleListProvider);
         return this;
     }
 
     @Override
-    public @NotNull CommandUnitBuilder commandCompleter(@Nullable CommandCompleter commandCompleter) {
+    @NotNull
+    public CommandUnitBuilder commandCompleter(@Nullable CommandCompleter commandCompleter) {
         throwInstanceIfNull();
         commandUnit.setCommandCompleter(commandCompleter);
         return this;
     }
 
     @Override
-    public @NotNull CommandUnitBuilder commandExecutor(@Nullable CommandExecutor commandExecutor) {
+    @NotNull
+    public CommandUnitBuilder commandExecutor(@Nullable CommandExecutor commandExecutor) {
         throwInstanceIfNull();
         commandUnit.setCommandExecutor(commandExecutor);
         return this;
     }
 
     @Override
-    public @NotNull CommandUnitBuilder addChild(@NotNull String childUnitName) {
+    @NotNull
+    public CommandUnitBuilder addChild(@NotNull String childUnitName) {
         throwInstanceIfNull();
         AssertUtils.notBlank(childUnitName, "无效的子命令单元名称");
         CommandUnitBuilderImpl childUnitBuilder = new CommandUnitBuilderImpl(commandUnitFactory, root, this);
@@ -146,7 +157,8 @@ final class CommandUnitBuilderImpl implements CommandUnitBuilder {
     }
 
     @Override
-    public @NotNull CommandUnitBuilder addChild(@NotNull String childUnitName, @NotNull String childUnitDescription) {
+    @NotNull
+    public CommandUnitBuilder addChild(@NotNull String childUnitName, @NotNull String childUnitDescription) {
         throwInstanceIfNull();
         AssertUtils.notBlank(childUnitName, "无效的子命令单元名称");
         AssertUtils.notNull(childUnitDescription, "无效的子命令单元描述");
@@ -156,7 +168,8 @@ final class CommandUnitBuilderImpl implements CommandUnitBuilder {
     }
 
     @Override
-    public @NotNull CommandUnitBuilder addChild(@NotNull Consumer<CommandUnitBuilder> childUnitBuilderConsumer) {
+    @NotNull
+    public CommandUnitBuilder addChild(@NotNull Consumer<CommandUnitBuilder> childUnitBuilderConsumer) {
         throwInstanceIfNull();
         AssertUtils.notNull(childUnitBuilderConsumer, "无效的子命令单元建造器消费者");
         CommandUnitBuilderImpl childUnitBuilder = new CommandUnitBuilderImpl(commandUnitFactory, root, this);
@@ -166,7 +179,8 @@ final class CommandUnitBuilderImpl implements CommandUnitBuilder {
     }
 
     @Override
-    public @NotNull CommandUnitBuilder removeChild(@NotNull String childUnitName) {
+    @NotNull
+    public CommandUnitBuilder removeChild(@NotNull String childUnitName) {
         throwInstanceIfNull();
         AssertUtils.notBlank(childUnitName, "无效的子命令单元名称");
         children.removeIf(childUnitBuilder -> childUnitName.equals(childUnitBuilder.commandUnit.getName()));
@@ -174,7 +188,8 @@ final class CommandUnitBuilderImpl implements CommandUnitBuilder {
     }
 
     @Override
-    public @NotNull CommandUnit build() {
+    @NotNull
+    public CommandUnit build() {
         throwInstanceIfNull();
         if (CollectionUtils.isNotEmpty(children)) {
             Iterator<CommandUnitBuilderImpl> iterator = children.iterator();

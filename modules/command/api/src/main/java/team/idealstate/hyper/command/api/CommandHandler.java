@@ -48,19 +48,25 @@ public interface CommandHandler {
 
     boolean execute(@NotNull CommandDetail commandDetail, @Nullable Consumer<CommandContext> prepContext) throws CommandException;
 
-    @NotNull List<String> complete(@NotNull String command) throws CommandException;
+    @NotNull
+    List<String> complete(@NotNull String command) throws CommandException;
 
-    @NotNull List<String> complete(@NotNull CommandDetail commandDetail) throws CommandException;
+    @NotNull
+    List<String> complete(@NotNull CommandDetail commandDetail) throws CommandException;
 
-    @NotNull List<String> complete(@NotNull String command, @Nullable Consumer<CommandContext> prepContext) throws CommandException;
+    @NotNull
+    List<String> complete(@NotNull String command, @Nullable Consumer<CommandContext> prepContext) throws CommandException;
 
-    @NotNull List<String> complete(@NotNull CommandDetail commandDetail, @Nullable Consumer<CommandContext> prepContext) throws CommandException;
+    @NotNull
+    List<String> complete(@NotNull CommandDetail commandDetail, @Nullable Consumer<CommandContext> prepContext) throws CommandException;
 
-    @NotNull CommandDetailResolver getCommandDetailResolver();
+    @NotNull
+    CommandDetailResolver getCommandDetailResolver();
 
     void setCommandDetailResolver(@NotNull CommandDetailResolver commandDetailResolver);
 
-    @NotNull CommandContextFactory getCommandContextFactory();
+    @NotNull
+    CommandContextFactory getCommandContextFactory();
 
     void setCommandContextFactory(@NotNull CommandContextFactory commandContextFactory);
 }

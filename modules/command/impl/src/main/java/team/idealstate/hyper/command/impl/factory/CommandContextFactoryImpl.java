@@ -33,7 +33,8 @@ import team.idealstate.hyper.command.impl.CommandContextImpl;
  */
 public final class CommandContextFactoryImpl implements CommandContextFactory {
     @Override
-    public @NotNull CommandContext createCommandContext() {
+    @NotNull
+    public CommandContext createCommandContext() {
         return new CommandContextImpl();
     }
 }

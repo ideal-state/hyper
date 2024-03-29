@@ -60,7 +60,8 @@ final class CommandLineBuilderImpl implements CommandLineBuilder {
     }
 
     @Override
-    public @NotNull CommandLineBuilder name(@NotNull String name) {
+    @NotNull
+    public CommandLineBuilder name(@NotNull String name) {
         AssertUtils.notBlank(name, "无效的命令行名称");
         if (ObjectUtils.isNull(commandLine)) {
             this.commandLine = commandLineFactory.createCommandLine(name);
@@ -71,7 +72,8 @@ final class CommandLineBuilderImpl implements CommandLineBuilder {
     }
 
     @Override
-    public @NotNull CommandLineBuilder description(@NotNull String description) {
+    @NotNull
+    public CommandLineBuilder description(@NotNull String description) {
         throwInstanceIfNull();
         AssertUtils.notNull(description, "无效的命令行描述");
         commandLine.setDescription(description);
@@ -79,7 +81,8 @@ final class CommandLineBuilderImpl implements CommandLineBuilder {
     }
 
     @Override
-    public @NotNull CommandUnitBuilder addCommandUnit(@NotNull String unitName) {
+    @NotNull
+    public CommandUnitBuilder addCommandUnit(@NotNull String unitName) {
         throwInstanceIfNull();
         AssertUtils.notBlank(unitName, "无效的命令单元名称");
         CommandUnitBuilderImpl unitBuilder = new CommandUnitBuilderImpl(commandUnitFactory, this, null);
@@ -88,7 +91,8 @@ final class CommandLineBuilderImpl implements CommandLineBuilder {
     }
 
     @Override
-    public @NotNull CommandUnitBuilder addCommandUnit(@NotNull String unitName, @NotNull String unitDescription) {
+    @NotNull
+    public CommandUnitBuilder addCommandUnit(@NotNull String unitName, @NotNull String unitDescription) {
         throwInstanceIfNull();
         AssertUtils.notBlank(unitName, "无效的命令单元名称");
         AssertUtils.notNull(unitDescription, "无效的命令单元描述");
@@ -98,7 +102,8 @@ final class CommandLineBuilderImpl implements CommandLineBuilder {
     }
 
     @Override
-    public @NotNull CommandLineBuilder addCommandUnit(@NotNull Consumer<CommandUnitBuilder> unitBuilderConsumer) {
+    @NotNull
+    public CommandLineBuilder addCommandUnit(@NotNull Consumer<CommandUnitBuilder> unitBuilderConsumer) {
         throwInstanceIfNull();
         AssertUtils.notNull(unitBuilderConsumer, "无效的命令单元建造器消费者");
         CommandUnitBuilderImpl unitBuilder = new CommandUnitBuilderImpl(commandUnitFactory, this, null);
@@ -108,7 +113,8 @@ final class CommandLineBuilderImpl implements CommandLineBuilder {
     }
 
     @Override
-    public @NotNull CommandLineBuilder removeCommandUnit(@NotNull String unitName) {
+    @NotNull
+    public CommandLineBuilder removeCommandUnit(@NotNull String unitName) {
         throwInstanceIfNull();
         AssertUtils.notBlank(unitName, "无效的命令单元名称");
         unitBuilders.removeIf(unitBuilder -> unitName.equals(unitBuilder.commandUnit.getName()));
@@ -116,7 +122,8 @@ final class CommandLineBuilderImpl implements CommandLineBuilder {
     }
 
     @Override
-    public @NotNull CommandLine build() {
+    @NotNull
+    public CommandLine build() {
         throwInstanceIfNull();
         if (CollectionUtils.isNotEmpty(unitBuilders)) {
             Iterator<CommandUnitBuilderImpl> iterator = unitBuilders.iterator();

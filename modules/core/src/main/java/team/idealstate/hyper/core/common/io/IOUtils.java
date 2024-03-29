@@ -46,7 +46,7 @@ public abstract class IOUtils {
     }
 
     @NotNull
-    public static ByteArrayInputStream byteArrayInputStream(byte @NotNull [] byteArray) {
+    public static ByteArrayInputStream byteArrayInputStream(@NotNull byte[] byteArray) {
         AssertUtils.notNull(byteArray, "无效的字节数组");
         return new ByteArrayInputStream(byteArray);
     }

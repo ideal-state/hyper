@@ -43,19 +43,22 @@ public final class CommandContextImpl implements CommandContext {
     private final Map<String, Object> valueMap = new LinkedHashMap<>(16, 0.6F);
 
     @Override
-    public @Nullable Object put(@NotNull String key, @Nullable Object value) {
+    @Nullable
+    public Object put(@NotNull String key, @Nullable Object value) {
         AssertUtils.notBlank(key, "无效的键");
         return valueMap.put(key, value);
     }
 
     @Override
-    public @Nullable Object remove(@NotNull String key) {
+    @Nullable
+    public Object remove(@NotNull String key) {
         AssertUtils.notBlank(key, "无效的键");
         return valueMap.remove(key);
     }
 
     @Override
-    public @NotNull Set<String> getKeys() {
+    @NotNull
+    public Set<String> getKeys() {
         if (valueMap.isEmpty()) {
             return Collections.emptySet();
         }
@@ -75,7 +78,8 @@ public final class CommandContextImpl implements CommandContext {
     }
 
     @Override
-    public @Nullable Object getValue(@NotNull String key) {
+    @Nullable
+    public Object getValue(@NotNull String key) {
         AssertUtils.notBlank(key, "无效的键");
         return valueMap.get(key);
     }
@@ -99,7 +103,8 @@ public final class CommandContextImpl implements CommandContext {
     }
 
     @Override
-    public @NotNull Map<String, Object> asMap() {
+    @NotNull
+    public Map<String, Object> asMap() {
         return MapUtils.linkedMapOf(valueMap);
     }
 }

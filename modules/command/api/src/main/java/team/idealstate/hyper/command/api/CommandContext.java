@@ -43,7 +43,8 @@ public interface CommandContext {
     @Nullable
     Object getValue(@NotNull String key);
 
-    @Nullable <T> T getValue(@NotNull String key, @NotNull Class<T> valueType);
+    @Nullable
+    <T> T getValue(@NotNull String key, @NotNull Class<T> valueType);
 
     @NotNull
     Set<String> getKeys();

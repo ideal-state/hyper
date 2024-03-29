@@ -32,7 +32,7 @@ import java.util.List;
  * @version 2.0.0
  * @since 2.0.0
  */
-@NotNull
+@FunctionalInterface
 public interface ExampleListProvider {
 
     ExampleListProvider DEFAULT = (context, arguments, depth, argument, incomplete) -> Collections.emptyList();

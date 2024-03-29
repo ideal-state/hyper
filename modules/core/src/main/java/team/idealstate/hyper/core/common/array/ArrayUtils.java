@@ -50,14 +50,14 @@ public abstract class ArrayUtils {
 
     @NotNull
     @SuppressWarnings({"unchecked"})
-    public static <E> E[] copyOf(E @NotNull [] source) {
+    public static <E> E[] copyOf(@NotNull E[] source) {
         AssertUtils.notNull(source, "无效的源数组");
         return (E[]) copyOfRange((Object) source, 0, source.length);
     }
 
     @NotNull
     @SuppressWarnings({"unchecked"})
-    public static <E> E[] copyOfRange(E @NotNull [] source, int offset) {
+    public static <E> E[] copyOfRange(@NotNull E[] source, int offset) {
         AssertUtils.notNull(source, "无效的源数组");
         int len = source.length;
         AssertUtils.isTrue(offset >= 0 && offset <= len, "无效的索引");
@@ -66,7 +66,7 @@ public abstract class ArrayUtils {
 
     @NotNull
     @SuppressWarnings({"unchecked"})
-    public static <E> E[] copyOfRange(E @NotNull [] source, int offset, int len) {
+    public static <E> E[] copyOfRange(@NotNull E[] source, int offset, int len) {
         AssertUtils.notNull(source, "无效的源数组");
         AssertUtils.isTrue(offset >= 0 && offset <= len && len <= source.length, "无效的索引");
         return (E[]) copyOfRange((Object) source, offset, len);
@@ -100,7 +100,7 @@ public abstract class ArrayUtils {
 
     @NotNull
     @SafeVarargs
-    public static <E> E[] merge(E @NotNull [] array1, E @NotNull [] array2, E... arrays) {
+    public static <E> E[] merge(@NotNull E[] array1, @NotNull E[] array2, E... arrays) {
         AssertUtils.notNull(array1, "无效的数组");
         AssertUtils.notNull(array2, "无效的数组");
         List<E[]> arrayList = ListUtils.linkedListOf();
@@ -128,23 +128,28 @@ public abstract class ArrayUtils {
     }
 
     @NotNull
-    public static <E> E[] emptyIfNull(E @Nullable [] array, @NotNull Class<E> componentType) {
+    public static <E> E[] emptyIfNull(@Nullable E[] array, @NotNull Class<E> componentType) {
         AssertUtils.notNull(componentType, "无效的数组元素类型");
         //noinspection unchecked
         return ObjectUtils.isNull(array) ? (E[]) Array.newInstance(componentType, 0) : array;
     }
 
     @NotNull
-    public static <E> E[] defaultIfEmpty(E @NotNull [] array, E @NotNull [] def) {
+    public static <E> E[] defaultIfEmpty(@NotNull E[] array, @NotNull E[] def) {
         AssertUtils.notNull(array, "无效的数组");
         AssertUtils.notNull(def, "无效的默认值");
         return isEmpty(array) ? def : array;
     }
 
     @NotNull
-    public static <E> E[] defaultIfNullOrEmpty(E @Nullable [] array, E @NotNull [] def) {
+    public static <E> E[] defaultIfNullOrEmpty(@Nullable E[] array, @NotNull E[] def) {
         AssertUtils.notNull(def, "无效的默认值");
-        return isNullOrEmpty(array) ? def : array;
+        if (isNullOrEmpty(array)) {
+            return def;
+        } else {
+            assert array != null;
+            return array;
+        }
     }
 
     public static boolean isArray(@NotNull Object array) {
@@ -164,156 +169,156 @@ public abstract class ArrayUtils {
         return !isNullOrArray(array);
     }
 
-    public static boolean isEmpty(Object @NotNull [] array) {
+    public static boolean isEmpty(@NotNull Object[] array) {
         AssertUtils.notNull(array, "无效的数组");
         return Array.getLength(array) == 0;
     }
 
-    public static boolean isNullOrEmpty(Object @Nullable [] array) {
+    public static boolean isNullOrEmpty(@Nullable Object[] array) {
         return ObjectUtils.isNull(array) || array.length == 0;
     }
 
-    public static boolean isNotEmpty(Object @NotNull [] array) {
+    public static boolean isNotEmpty(@NotNull Object[] array) {
         return !isEmpty(array);
     }
 
-    public static boolean isNotNullOrEmpty(Object @Nullable [] array) {
+    public static boolean isNotNullOrEmpty(@Nullable Object[] array) {
         return !isNullOrEmpty(array);
     }
 
-    public static boolean isEmpty(byte @NotNull [] array) {
+    public static boolean isEmpty(@NotNull byte[] array) {
         AssertUtils.notNull(array, "无效的数组");
         return Array.getLength(array) == 0;
     }
 
-    public static boolean isNullOrEmpty(byte @Nullable [] array) {
+    public static boolean isNullOrEmpty(@Nullable byte[] array) {
         return ObjectUtils.isNull(array) || array.length == 0;
     }
 
-    public static boolean isNotEmpty(byte @NotNull [] array) {
+    public static boolean isNotEmpty(@NotNull byte[] array) {
         return !isEmpty(array);
     }
 
-    public static boolean isNotNullOrEmpty(byte @Nullable [] array) {
+    public static boolean isNotNullOrEmpty(@Nullable byte[] array) {
         return !isNullOrEmpty(array);
     }
 
-    public static boolean isEmpty(short @NotNull [] array) {
+    public static boolean isEmpty(@NotNull short[] array) {
         AssertUtils.notNull(array, "无效的数组");
         return Array.getLength(array) == 0;
     }
 
-    public static boolean isNullOrEmpty(short @Nullable [] array) {
+    public static boolean isNullOrEmpty(@Nullable short[] array) {
         return ObjectUtils.isNull(array) || array.length == 0;
     }
 
-    public static boolean isNotEmpty(short @NotNull [] array) {
+    public static boolean isNotEmpty(@NotNull short[] array) {
         return !isEmpty(array);
     }
 
-    public static boolean isNotNullOrEmpty(short @Nullable [] array) {
+    public static boolean isNotNullOrEmpty(@Nullable short[] array) {
         return !isNullOrEmpty(array);
     }
 
-    public static boolean isEmpty(int @NotNull [] array) {
+    public static boolean isEmpty(@NotNull int[] array) {
         AssertUtils.notNull(array, "无效的数组");
         return Array.getLength(array) == 0;
     }
 
-    public static boolean isNullOrEmpty(int @Nullable [] array) {
+    public static boolean isNullOrEmpty(@Nullable int[] array) {
         return ObjectUtils.isNull(array) || array.length == 0;
     }
 
-    public static boolean isNotEmpty(int @NotNull [] array) {
+    public static boolean isNotEmpty(@NotNull int[] array) {
         return !isEmpty(array);
     }
 
-    public static boolean isNotNullOrEmpty(int @Nullable [] array) {
+    public static boolean isNotNullOrEmpty(@Nullable int[] array) {
         return !isNullOrEmpty(array);
     }
 
-    public static boolean isEmpty(long @NotNull [] array) {
+    public static boolean isEmpty(@NotNull long[] array) {
         AssertUtils.notNull(array, "无效的数组");
         return Array.getLength(array) == 0;
     }
 
-    public static boolean isNullOrEmpty(long @Nullable [] array) {
+    public static boolean isNullOrEmpty(@Nullable long[] array) {
         return ObjectUtils.isNull(array) || array.length == 0;
     }
 
-    public static boolean isNotEmpty(long @NotNull [] array) {
+    public static boolean isNotEmpty(@NotNull long[] array) {
         return !isEmpty(array);
     }
 
-    public static boolean isNotNullOrEmpty(long @Nullable [] array) {
+    public static boolean isNotNullOrEmpty(@Nullable long[] array) {
         return !isNullOrEmpty(array);
     }
 
-    public static boolean isEmpty(float @NotNull [] array) {
+    public static boolean isEmpty(@NotNull float[] array) {
         AssertUtils.notNull(array, "无效的数组");
         return Array.getLength(array) == 0;
     }
 
-    public static boolean isNullOrEmpty(float @Nullable [] array) {
+    public static boolean isNullOrEmpty(@Nullable float[] array) {
         return ObjectUtils.isNull(array) || array.length == 0;
     }
 
-    public static boolean isNotEmpty(float @NotNull [] array) {
+    public static boolean isNotEmpty(@NotNull float[] array) {
         return !isEmpty(array);
     }
 
-    public static boolean isNotNullOrEmpty(float @Nullable [] array) {
+    public static boolean isNotNullOrEmpty(@Nullable float[] array) {
         return !isNullOrEmpty(array);
     }
 
-    public static boolean isEmpty(double @NotNull [] array) {
+    public static boolean isEmpty(@NotNull double[] array) {
         AssertUtils.notNull(array, "无效的数组");
         return Array.getLength(array) == 0;
     }
 
-    public static boolean isNullOrEmpty(double @Nullable [] array) {
+    public static boolean isNullOrEmpty(@Nullable double[] array) {
         return ObjectUtils.isNull(array) || array.length == 0;
     }
 
-    public static boolean isNotEmpty(double @NotNull [] array) {
+    public static boolean isNotEmpty(@NotNull double[] array) {
         return !isEmpty(array);
     }
 
-    public static boolean isNotNullOrEmpty(double @Nullable [] array) {
+    public static boolean isNotNullOrEmpty(@Nullable double[] array) {
         return !isNullOrEmpty(array);
     }
 
-    public static boolean isEmpty(boolean @NotNull [] array) {
+    public static boolean isEmpty(@NotNull boolean[] array) {
         AssertUtils.notNull(array, "无效的数组");
         return Array.getLength(array) == 0;
     }
 
-    public static boolean isNullOrEmpty(boolean @Nullable [] array) {
+    public static boolean isNullOrEmpty(@Nullable boolean[] array) {
         return ObjectUtils.isNull(array) || array.length == 0;
     }
 
-    public static boolean isNotEmpty(boolean @NotNull [] array) {
+    public static boolean isNotEmpty(@NotNull boolean[] array) {
         return !isEmpty(array);
     }
 
-    public static boolean isNotNullOrEmpty(boolean @Nullable [] array) {
+    public static boolean isNotNullOrEmpty(@Nullable boolean[] array) {
         return !isNullOrEmpty(array);
     }
 
-    public static boolean isEmpty(char @NotNull [] array) {
+    public static boolean isEmpty(@NotNull char[] array) {
         AssertUtils.notNull(array, "无效的数组");
         return Array.getLength(array) == 0;
     }
 
-    public static boolean isNullOrEmpty(char @Nullable [] array) {
+    public static boolean isNullOrEmpty(@Nullable char[] array) {
         return ObjectUtils.isNull(array) || array.length == 0;
     }
 
-    public static boolean isNotEmpty(char @NotNull [] array) {
+    public static boolean isNotEmpty(@NotNull char[] array) {
         return !isEmpty(array);
     }
 
-    public static boolean isNotNullOrEmpty(char @Nullable [] array) {
+    public static boolean isNotNullOrEmpty(@Nullable char[] array) {
         return !isNullOrEmpty(array);
     }
 }

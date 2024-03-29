@@ -59,17 +59,23 @@ public interface Annotated<E extends AnnotatedElement> {
 
     boolean hasNotDeclaredAnyAnnotations(Class<? extends Annotation>... annotationTypes);
 
-    @Nullable <A extends Annotation> A getAnnotation(@NotNull Class<A> annotationType);
+    @Nullable
+    <A extends Annotation> A getAnnotation(@NotNull Class<A> annotationType);
 
-    <A extends Annotation> A @NotNull [] getAnnotations(@NotNull Class<A> annotationType);
+    @NotNull
+    <A extends Annotation> A[] getAnnotations(@NotNull Class<A> annotationType);
 
-    Annotation @NotNull [] getAnnotations();
+    @NotNull
+    Annotation[] getAnnotations();
 
-    @Nullable <A extends Annotation> A getDeclaredAnnotation(@NotNull Class<A> annotationType);
+    @Nullable
+    <A extends Annotation> A getDeclaredAnnotation(@NotNull Class<A> annotationType);
 
-    <A extends Annotation> A @NotNull [] getDeclaredAnnotations(@NotNull Class<A> annotationType);
+    @NotNull
+    <A extends Annotation> A[] getDeclaredAnnotations(@NotNull Class<A> annotationType);
 
-    Annotation @NotNull [] getDeclaredAnnotations();
+    @NotNull
+    Annotation[] getDeclaredAnnotations();
 
     @NotNull
     E getAnnotatedElement();

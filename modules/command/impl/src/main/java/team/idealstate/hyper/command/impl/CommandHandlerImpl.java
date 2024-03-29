@@ -138,17 +138,20 @@ public final class CommandHandlerImpl implements CommandHandler {
     }
 
     @Override
-    public @NotNull List<String> complete(@NotNull String command) throws CommandException {
+    @NotNull
+    public List<String> complete(@NotNull String command) throws CommandException {
         return complete(getCommandDetailResolver().resolve(command), null);
     }
 
     @Override
-    public @NotNull List<String> complete(@NotNull CommandDetail commandDetail) throws CommandException {
+    @NotNull
+    public List<String> complete(@NotNull CommandDetail commandDetail) throws CommandException {
         return complete(commandDetail, null);
     }
 
     @Override
-    public @NotNull List<String> complete(@NotNull String command, @Nullable Consumer<CommandContext> prepContext) throws CommandException {
+    @NotNull
+    public List<String> complete(@NotNull String command, @Nullable Consumer<CommandContext> prepContext) throws CommandException {
         return complete(getCommandDetailResolver().resolve(command), prepContext);
     }
 

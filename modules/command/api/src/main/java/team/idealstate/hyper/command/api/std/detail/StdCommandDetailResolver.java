@@ -39,7 +39,8 @@ public final class StdCommandDetailResolver implements CommandDetailResolver {
     private static final String[] EMPTY_ARGS = new String[0];
 
     @Override
-    public @NotNull CommandDetail resolve(@NotNull String command) throws InvalidCommandException {
+    @NotNull
+    public CommandDetail resolve(@NotNull String command) throws InvalidCommandException {
         if (!command.startsWith(PREFIX)) {
             throw new InvalidCommandException("命令必须以 \"" + PREFIX + "\" 开头。");
         }

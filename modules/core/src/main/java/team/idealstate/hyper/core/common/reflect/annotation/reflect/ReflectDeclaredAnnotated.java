@@ -116,24 +116,28 @@ abstract class ReflectDeclaredAnnotated<E extends AnnotatedElement> implements A
     }
 
     @Override
-    public <A extends Annotation> @Nullable A getDeclaredAnnotation(@NotNull Class<A> annotationType) {
+    @Nullable
+    public <A extends Annotation> A getDeclaredAnnotation(@NotNull Class<A> annotationType) {
         AssertUtils.notNull(annotationType, "无效的注解类型");
         return getAnnotatedElement().getDeclaredAnnotation(annotationType);
     }
 
     @Override
-    public <A extends Annotation> A @NotNull [] getDeclaredAnnotations(@NotNull Class<A> annotationType) {
+    @NotNull
+    public <A extends Annotation> A[] getDeclaredAnnotations(@NotNull Class<A> annotationType) {
         AssertUtils.notNull(annotationType, "无效的注解类型");
         return getAnnotatedElement().getDeclaredAnnotationsByType(annotationType);
     }
 
     @Override
-    public Annotation @NotNull [] getDeclaredAnnotations() {
+    @NotNull
+    public Annotation[] getDeclaredAnnotations() {
         return getAnnotatedElement().getDeclaredAnnotations();
     }
 
     @Override
-    public final @NotNull E getAnnotatedElement() {
+    @NotNull
+    public final E getAnnotatedElement() {
         return annotatedElement;
     }
 }

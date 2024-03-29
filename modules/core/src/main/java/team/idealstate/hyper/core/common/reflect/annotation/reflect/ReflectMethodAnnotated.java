@@ -148,7 +148,8 @@ public class ReflectMethodAnnotated extends ReflectDeclaredAnnotated<Method> {
     }
 
     @Override
-    public <A extends Annotation> @Nullable A getAnnotation(@NotNull Class<A> annotationType) {
+    @Nullable
+    public <A extends Annotation> A getAnnotation(@NotNull Class<A> annotationType) {
         A annotation = getDeclaredAnnotation(annotationType);
         if (ObjectUtils.isNotNull(annotation)) {
             return annotation;
@@ -163,7 +164,8 @@ public class ReflectMethodAnnotated extends ReflectDeclaredAnnotated<Method> {
     }
 
     @Override
-    public <A extends Annotation> A @NotNull [] getAnnotations(@NotNull Class<A> annotationType) {
+    @NotNull
+    public <A extends Annotation> A[] getAnnotations(@NotNull Class<A> annotationType) {
         A[] declaredAnnotations = getDeclaredAnnotations(annotationType);
         List<A> result = ListUtils.linkedListOf(declaredAnnotations);
         for (Method ancestorMethod : MethodUtils.getAncestorMethods(getAnnotatedElement())) {
@@ -177,7 +179,8 @@ public class ReflectMethodAnnotated extends ReflectDeclaredAnnotated<Method> {
     }
 
     @Override
-    public Annotation @NotNull [] getAnnotations() {
+    @NotNull
+    public Annotation[] getAnnotations() {
         Annotation[] declaredAnnotations = getDeclaredAnnotations();
         List<Annotation> result = ListUtils.linkedListOf(declaredAnnotations);
         for (Method ancestorMethod : MethodUtils.getAncestorMethods(getAnnotatedElement())) {
