@@ -4,6 +4,24 @@
   <component name="FrameworkDetectionExcludesConfiguration">
     <file type="web" url="file://$PROJECT_DIR$" />
   </component>
+  <component name="NullableNotNullManager">
+    <option name="myDefaultNullable" value="team.idealstate.hyper.annotation.lang.Nullable" />
+    <option name="myDefaultNotNull" value="team.idealstate.hyper.annotation.lang.NotNull" />
+    <option name="myNullables">
+      <value>
+        <list size="1">
+          <item index="0" class="java.lang.String" itemvalue="team.idealstate.hyper.annotation.lang.Nullable" />
+        </list>
+      </value>
+    </option>
+    <option name="myNotNulls">
+      <value>
+        <list size="1">
+          <item index="0" class="java.lang.String" itemvalue="team.idealstate.hyper.annotation.lang.NotNull" />
+        </list>
+      </value>
+    </option>
+  </component>
   <component name="ProjectRootManager" version="2" languageLevel="JDK_1_8" default="true" project-jdk-name="zulu-1.8" project-jdk-type="JavaSDK">
     <output url="file://$PROJECT_DIR$/out" />
   </component>

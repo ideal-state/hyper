@@ -1,6 +1,7 @@
 <component name="CopyrightManager">
   <settings>
     <module2copyright>
+      <element module="hyper-annotation" copyright="[Apache2.0]hyper-annotation" />
       <element module="hyper-core" copyright="[Apache2.0]hyper-core" />
       <element module="hyper-gradle-plugin" copyright="[Apache2.0]hyper-gradle-plugin" />
       <element module="hyper-minecraft-spigot-framework" copyright="[GPL3.0]hyper-minecraft-spigot-framework" />
