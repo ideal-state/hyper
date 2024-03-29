@@ -20,6 +20,7 @@ package team.idealstate.hyper.core.common.sort;
 import team.idealstate.hyper.core.common.object.ObjectUtils;
 import team.idealstate.hyper.core.common.reflect.annotation.reflect.ReflectAnnotatedUtils;
 
+import java.io.Serializable;
 import java.util.Comparator;
 
 /**
@@ -31,8 +32,9 @@ import java.util.Comparator;
  * @version 1.0.0
  * @since 1.0.0
  */
-public class OrderComparator<O> implements Comparator<O> {
+public class OrderComparator<O> implements Comparator<O>, Serializable {
 
+    private static final long serialVersionUID = -3214225699550765098L;
     protected final int nullOrder;
 
     OrderComparator() {
