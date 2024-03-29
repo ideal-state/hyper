@@ -12,8 +12,8 @@ pluginManagement {
             url = uri("https://oss.sonatype.org/content/groups/public/")
         }
         maven {
-            name = "aliyun-central"
-            url = uri("https://maven.aliyun.com/repository/central/")
+            name = "aliyun-public"
+            url = uri("https://maven.aliyun.com/repository/public/")
         }
         gradlePluginPortal()
         mavenCentral()
@@ -28,8 +28,8 @@ buildscript {
             url = uri("https://oss.sonatype.org/content/groups/public/")
         }
         maven {
-            name = "aliyun-central"
-            url = uri("https://maven.aliyun.com/repository/central/")
+            name = "aliyun-public"
+            url = uri("https://maven.aliyun.com/repository/public/")
         }
         mavenCentral()
     }
