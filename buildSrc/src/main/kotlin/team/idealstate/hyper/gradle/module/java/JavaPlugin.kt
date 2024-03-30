@@ -112,14 +112,20 @@ open class JavaPlugin : ConfigurablePlugin<Java>(
 
     private fun configureJavaCompileTask(encoding: String) {
         project.tasks.withType(JavaCompile::class.java) {
-            it.options.encoding = encoding
-            it.options.compilerArgs.apply {
-                add("-XDignore.symbol.file")
-                add("-parameters")
+            it.options.also { compileOptions ->
+                compileOptions.isFork = true
+                compileOptions.encoding = encoding
+                compileOptions.compilerArgs.also { compileArgs ->
+                    compileArgs.add("-deprecation")
+                    compileArgs.add("-parameters")
+                    compileArgs.add("-XDignore.symbol.file")
+                }
+                compileOptions.forkOptions.also { forkOptions ->
+                    forkOptions.jvmArgs!!.add("-J-Dfile.encoding=$encoding")
+                    forkOptions.executable =
+                        it.javaCompiler.get().executablePath.asFile.absolutePath
+                }
             }
-            it.options.isFork = true
-            it.options.forkOptions.executable =
-                it.javaCompiler.get().executablePath.asFile.absolutePath
         }
     }
 
