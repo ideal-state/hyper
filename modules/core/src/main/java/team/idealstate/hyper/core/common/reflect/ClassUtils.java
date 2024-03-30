@@ -50,6 +50,11 @@ public abstract class ClassUtils {
         );
     }
 
+    public static boolean isGeneric(@NotNull Class<?> cls) {
+        AssertUtils.notNull(cls, "无效的类");
+        return cls.getTypeParameters().length > 0;
+    }
+
     @NotNull
     public static List<Class<?>> getAncestorClasses(@NotNull Class<?> subclass) {
         AssertUtils.notNull(subclass, "无效的类");

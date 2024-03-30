@@ -19,6 +19,7 @@ package team.idealstate.hyper.core.common;
 
 import team.idealstate.hyper.core.common.array.ArrayUtils;
 import team.idealstate.hyper.core.common.object.ObjectUtils;
+import team.idealstate.hyper.core.common.reflect.ClassUtils;
 import team.idealstate.hyper.core.common.string.StringUtils;
 import team.idealstate.hyper.core.common.template.CollectionUtils;
 import team.idealstate.hyper.core.common.template.MapUtils;
@@ -281,6 +282,10 @@ public abstract class AssertUtils {
 
     public static void isNotNullOrArray(Object array, String message) {
         isTrue(ArrayUtils.isNotNullOrArray(array), message);
+    }
+
+    public static void isGeneric(Class<?> cls, String message) {
+        isTrue(ClassUtils.isGeneric(cls), message);
     }
 
     public static void isNumeric(CharSequence string, String message) {
