@@ -127,10 +127,10 @@ public abstract class ArrayUtils {
         return array.toArray(array1);
     }
 
+    @SuppressWarnings("unchecked")
     @NotNull
     public static <E> E[] emptyIfNull(@Nullable E[] array, @NotNull Class<E> componentType) {
         AssertUtils.notNull(componentType, "无效的数组元素类型");
-        //noinspection unchecked
         return ObjectUtils.isNull(array) ? (E[]) Array.newInstance(componentType, 0) : array;
     }
 
