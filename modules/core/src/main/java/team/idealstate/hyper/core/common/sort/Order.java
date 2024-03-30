@@ -33,9 +33,6 @@ import java.lang.annotation.*;
 @Documented
 public @interface Order {
 
-    @SuppressWarnings("rawtypes")
-    OrderComparator COMPARATOR = new OrderComparator();
-
     int FIRST = Integer.MIN_VALUE;
     int DEFAULT = 0;
     int END = Integer.MAX_VALUE;

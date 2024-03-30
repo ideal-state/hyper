@@ -34,11 +34,19 @@ import java.util.Comparator;
  */
 public class OrderComparator<O> implements Comparator<O>, Serializable {
 
+    @SuppressWarnings("rawtypes")
+    private static final OrderComparator DEFAULT = new OrderComparator();
+
+    private OrderComparator() {
+        this(Order.END);
+    }
+
     private static final long serialVersionUID = -3214225699550765098L;
     protected final int nullOrder;
 
-    OrderComparator() {
-        this(Order.END);
+    @SuppressWarnings({"unchecked"})
+    public static <O> OrderComparator<O> getDefault() {
+        return (OrderComparator<O>) DEFAULT;
     }
 
     public OrderComparator(int nullOrder) {
