@@ -1,5 +1,5 @@
 /*
- *    hyper-core
+ *    hyper-event-api
  *    Copyright [2024] [ideal-state]
  *
  *    Licensed under the Apache License, Version 2.0 (the "License");
@@ -15,20 +15,20 @@
  *    limitations under the License.
  */
 
-package team.idealstate.hyper.core.common.sort;
+package team.idealstate.hyper.event.api;
 
 /**
- * <p>Prioritizable</p>
+ * <p>Cancellable</p>
  *
- * <p>创建于 2024/3/24 22:23</p>
+ * <p>创建于 2024/2/21 2:46</p>
  *
  * @author ketikai
  * @version 1.0.0
  * @since 1.0.0
  */
-public interface Prioritizable {
+public interface Cancellable {
 
-    default int priority() {
-        return Priority.DEFAULT;
-    }
+    boolean isCancelled();
+
+    void cancel();
 }

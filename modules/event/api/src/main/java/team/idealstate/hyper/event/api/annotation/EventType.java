@@ -1,5 +1,5 @@
 /*
- *    hyper-core
+ *    hyper-event-api
  *    Copyright [2024] [ideal-state]
  *
  *    Licensed under the Apache License, Version 2.0 (the "License");
@@ -15,30 +15,25 @@
  *    limitations under the License.
  */
 
-package team.idealstate.hyper.core.common.sort;
+package team.idealstate.hyper.event.api.annotation;
 
 import java.lang.annotation.*;
 
 /**
- * <p>Priority</p>
+ * <p>EventType</p>
  *
- * <p>创建于 2024/2/21 5:12</p>
+ * <p>创建于 2024/3/30 7:54</p>
  *
  * @author ketikai
  * @version 1.0.0
  * @since 1.0.0
  */
-@Target(ElementType.TYPE)
+@Target({ElementType.TYPE})
 @Retention(RetentionPolicy.RUNTIME)
 @Documented
-public @interface Priority {
+public @interface EventType {
 
-    @SuppressWarnings("rawtypes")
-    PriorityComparator COMPARATOR = new PriorityComparator();
+    Class<?> DEFAULT = void.class;
 
-    int HIGHEST = Integer.MAX_VALUE;
-    int DEFAULT = 0;
-    int LOWEST = Integer.MIN_VALUE;
-
-    int value() default DEFAULT;
+    Class<?> value() default void.class;
 }
