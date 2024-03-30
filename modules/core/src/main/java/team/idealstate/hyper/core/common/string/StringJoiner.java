@@ -20,6 +20,9 @@ package team.idealstate.hyper.core.common.string;
 import team.idealstate.hyper.annotation.lang.NotNull;
 import team.idealstate.hyper.core.common.AssertUtils;
 
+import java.util.Arrays;
+import java.util.Collection;
+
 /**
  * <p>StringJoiner</p>
  *
@@ -207,6 +210,20 @@ public class StringJoiner {
         appendPrefix();
         builder.append(object);
         appendSuffix();
+        return this;
+    }
+
+    @NotNull
+    public StringJoiner append(@NotNull Collection<? extends CharSequence> charSequences) {
+        AssertUtils.notNull(charSequences, "无效的字符序列列表");
+        charSequences.forEach(this::append);
+        return this;
+    }
+
+    @NotNull
+    public StringJoiner append(@NotNull CharSequence[] charSequences) {
+        AssertUtils.notNull(charSequences, "无效的字符序列数组");
+        Arrays.stream(charSequences).forEach(this::append);
         return this;
     }
 

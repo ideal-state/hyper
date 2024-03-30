@@ -192,4 +192,9 @@ public abstract class StringUtils {
         }
         return count;
     }
+
+    @NotNull
+    public static String valueOf(@Nullable Object object) {
+        return object == null ? "null" : object.toString();
+    }
 }
