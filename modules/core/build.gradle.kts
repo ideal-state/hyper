@@ -5,6 +5,7 @@ plugins {
 
 dependencies {
     hyperApi(project(":modules:hyper-annotation"))
+    hyperApi("org.apache.logging.log4j:log4j-api:2.22.1")
 
     testImplementation(platform("org.junit:junit-bom:5.9.1"))
     testImplementation("org.junit.jupiter:junit-jupiter")

@@ -16,3 +16,10 @@
    limitations under the License.
 
 ------------------------------------------------------------------------------
+
+    logging-log4j2:
+        log4j-api
+    (https://github.com/apache/logging-log4j2)
+    Apache License 2.0
+
+------------------------------------------------------------------------------
