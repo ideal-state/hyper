@@ -39,4 +39,13 @@ public interface EventListener<EVENT> {
             throw throwable;
         }
     }
+
+    interface UID<EVENT> {
+
+        @NotNull
+        Class<EVENT> getEventType();
+
+        @NotNull
+        EventListener<EVENT> getEventListener();
+    }
 }

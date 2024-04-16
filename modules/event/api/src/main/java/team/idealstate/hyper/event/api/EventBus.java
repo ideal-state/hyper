@@ -34,10 +34,8 @@ public interface EventBus {
     void publish(@NotNull Object event);
 
     @NotNull
-    EventListenerUid subscribe(@NotNull EventListener<?> eventListener);
+    <EVENT> EventListener.UID<EVENT> subscribe(@NotNull EventListener<EVENT> eventListener);
 
     @Nullable
-    EventListener<?> unsubscribe(@NotNull EventListenerUid eventListenerUid);
-
-    void reset();
+    <EVENT> EventListener<EVENT> unsubscribe(@NotNull EventListener.UID<EVENT> eventListenerUid);
 }
