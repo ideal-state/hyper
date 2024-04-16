@@ -58,7 +58,7 @@ public class OrderComparator<O> implements Comparator<O>, Serializable {
         return orderOf(first) - orderOf(second);
     }
 
-    protected final int orderOf(O orderable) {
+    public final int orderOf(O orderable) {
         if (orderable instanceof Order) {
             return ((Order) orderable).value();
         }
