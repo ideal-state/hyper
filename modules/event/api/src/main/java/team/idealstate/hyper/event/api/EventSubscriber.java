@@ -20,7 +20,7 @@ package team.idealstate.hyper.event.api;
 import team.idealstate.hyper.annotation.lang.NotNull;
 
 /**
- * <p>EventListener</p>
+ * <p>EventSubscriber</p>
  *
  * <p>创建于 2024/2/21 2:40</p>
  *
@@ -29,9 +29,9 @@ import team.idealstate.hyper.annotation.lang.NotNull;
  * @since 1.0.0
  */
 @FunctionalInterface
-public interface EventListener<EVENT> {
+public interface EventSubscriber<EVENT> {
 
-    void on(@NotNull EVENT event) throws Throwable;
+    void onEvent(@NotNull EVENT event) throws Throwable;
 
     @SuppressWarnings("ConstantConditions")
     default void exceptionCaught(@NotNull Throwable throwable) throws Throwable {
@@ -46,6 +46,6 @@ public interface EventListener<EVENT> {
         Class<EVENT> getEventType();
 
         @NotNull
-        EventListener<EVENT> getEventListener();
+        EventSubscriber<EVENT> getEventSubscriber();
     }
 }

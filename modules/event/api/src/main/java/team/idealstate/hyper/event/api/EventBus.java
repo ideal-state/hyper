@@ -31,11 +31,11 @@ import team.idealstate.hyper.annotation.lang.Nullable;
  */
 public interface EventBus {
 
-    void publish(@NotNull Object event);
+    void post(@NotNull Object event);
 
     @NotNull
-    <EVENT> EventListener.UID<EVENT> subscribe(@NotNull EventListener<EVENT> eventListener);
+    <EVENT> EventSubscriber.UID<EVENT> register(@NotNull EventSubscriber<EVENT> eventSubscriber);
 
     @Nullable
-    <EVENT> EventListener<EVENT> unsubscribe(@NotNull EventListener.UID<EVENT> eventListenerUid);
+    <EVENT> EventSubscriber<EVENT> unregister(@NotNull EventSubscriber.UID<EVENT> eventSubscriberUid);
 }
