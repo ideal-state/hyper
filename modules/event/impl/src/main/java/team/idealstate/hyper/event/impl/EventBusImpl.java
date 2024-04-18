@@ -31,7 +31,7 @@ import team.idealstate.hyper.core.common.template.ListUtils;
 import team.idealstate.hyper.core.common.template.SetUtils;
 import team.idealstate.hyper.event.api.Cancellable;
 import team.idealstate.hyper.event.api.EventBus;
-import team.idealstate.hyper.event.api.EventListener;
+import team.idealstate.hyper.event.api.EventSubscriber;
 import team.idealstate.hyper.event.api.annotation.Asynchronous;
 
 import java.lang.reflect.Method;
@@ -58,48 +58,48 @@ public final class EventBusImpl implements EventBus {
 
     private static final Logger logger = LogManager.getLogger(EventBusImpl.class);
 
-    private static final OrderComparator<EventListener<?>> EVENT_LISTENER_COMPARATOR = OrderComparator.getDefault();
+    private static final OrderComparator<EventSubscriber<?>> EVENT_SUBSCRIBER_COMPARATOR = OrderComparator.getDefault();
 
-    private final Set<UUID> eventListenerUids = SetUtils.concurrentSetOf();
-    private final List<UIDEventListener<?>> eventListeners = ListUtils.concurrentListOf();
+    private final Set<UUID> eventSubscriberUids = SetUtils.concurrentSetOf();
+    private final List<UIDEventSubscriber<?>> eventSubscribers = ListUtils.concurrentListOf();
     private final ExecutorService executorService;
-    private final Lock subscribeLock = new ReentrantLock();
+    private final Lock registerLock = new ReentrantLock();
 
-    public EventBusImpl(ExecutorService executorService) {
+    public EventBusImpl(@Nullable ExecutorService executorService) {
         this.executorService = executorService;
     }
 
     @SuppressWarnings({"rawtypes", "unchecked"})
-    private void syncPublish(Object event) {
+    private void syncPost(Object event) {
         Class<?> eventType = event.getClass();
-        List<UIDEventListener<?>> listeners = eventListeners.stream()
+        List<UIDEventSubscriber<?>> subscribers = eventSubscribers.stream()
                 .filter((uid) -> uid.getEventType().isAssignableFrom(eventType))
-                .sorted(EVENT_LISTENER_COMPARATOR)
+                .sorted(EVENT_SUBSCRIBER_COMPARATOR)
                 .collect(Collectors.toCollection(ListUtils::linkedListOf));
-        if (CollectionUtils.isNullOrEmpty(listeners)) {
+        if (CollectionUtils.isNullOrEmpty(subscribers)) {
             return;
         }
-        EventListener lastListener = null;
+        EventSubscriber lastSubscriber = null;
         try {
             if (event instanceof Cancellable) {
                 Cancellable cancellable = (Cancellable) event;
-                for (EventListener listener : listeners) {
+                for (EventSubscriber subscriber : subscribers) {
                     if (cancellable.isCancelled()) {
                         continue;
                     }
-                    lastListener = listener;
-                    listener.on(event);
+                    lastSubscriber = subscriber;
+                    subscriber.onEvent(event);
                 }
             } else {
-                for (EventListener listener : listeners) {
-                    lastListener = listener;
-                    listener.on(event);
+                for (EventSubscriber subscriber : subscribers) {
+                    lastSubscriber = subscriber;
+                    subscriber.onEvent(event);
                 }
             }
         } catch (Throwable e) {
-            if (lastListener != null) {
+            if (lastSubscriber != null) {
                 try {
-                    lastListener.exceptionCaught(e);
+                    lastSubscriber.exceptionCaught(e);
                 } catch (Throwable ex) {
                     logger.catching(ex);
                 }
@@ -109,90 +109,90 @@ public final class EventBusImpl implements EventBus {
         }
     }
 
-    private void asyncPublish(Object event) {
+    private void asyncPost(Object event) {
         if (ObjectUtils.isNull(executorService)) {
             throw new UnsupportedOperationException("该事件总线无法处理异步事件。");
         }
-        executorService.submit(() -> syncPublish(event));
+        executorService.submit(() -> syncPost(event));
     }
 
     @Override
-    public void publish(@NotNull Object event) {
+    public void post(@NotNull Object event) {
         AssertUtils.notNull(event, "无效的事件");
-        if (CollectionUtils.isNullOrEmpty(eventListeners)) {
+        if (CollectionUtils.isNullOrEmpty(eventSubscribers)) {
             return;
         }
         Class<?> eventType = event.getClass();
         boolean isAsync = ReflectAnnotatedUtils.of(eventType).hasAnnotation(Asynchronous.class);
         if (isAsync) {
-            asyncPublish(event);
+            asyncPost(event);
         } else {
-            syncPublish(event);
+            syncPost(event);
         }
     }
 
     @Override
     @NotNull
-    public <EVENT> EventListener.UID<EVENT> subscribe(@NotNull EventListener<EVENT> eventListener) {
-        AssertUtils.notNull(eventListener, "无效的事件监听器");
+    public <EVENT> EventSubscriber.UID<EVENT> register(@NotNull EventSubscriber<EVENT> eventSubscriber) {
+        AssertUtils.notNull(eventSubscriber, "无效的事件订阅者");
         try {
-            if (subscribeLock.tryLock(3L, TimeUnit.SECONDS)) {
+            if (registerLock.tryLock(3L, TimeUnit.SECONDS)) {
                 try {
                     UUID uuid = UUID.randomUUID();
-                    while (eventListenerUids.contains(uuid)) {
+                    while (eventSubscriberUids.contains(uuid)) {
                         uuid = UUID.randomUUID();
                     }
-                    UIDEventListener<EVENT> uidEventListener = new UIDEventListener<>(uuid, eventListener);
-                    eventListenerUids.add(uuid);
-                    eventListeners.add(uidEventListener);
-                    return uidEventListener;
+                    UIDEventSubscriber<EVENT> uidEventSubscriber = new UIDEventSubscriber<>(uuid, eventSubscriber);
+                    eventSubscriberUids.add(uuid);
+                    eventSubscribers.add(uidEventSubscriber);
+                    return uidEventSubscriber;
                 } finally {
-                    subscribeLock.unlock();
+                    registerLock.unlock();
                 }
             }
         } catch (InterruptedException e) {
             Thread.currentThread().interrupt();
         }
-        throw new IllegalStateException("处理监听器订阅超时。");
+        throw new IllegalStateException("处理订阅者订阅超时。");
     }
 
     @Override
     @Nullable
-    public <EVENT> EventListener<EVENT> unsubscribe(@NotNull EventListener.UID<EVENT> eventListenerUid) {
-        AssertUtils.notNull(eventListenerUid, "无效的事件监听器唯一序号");
-        if (eventListenerUid instanceof UIDEventListener) {
-            UIDEventListener<EVENT> uidEventListener = (UIDEventListener<EVENT>) eventListenerUid;
-            UUID uuid = uidEventListener.getUuid();
-            if (eventListenerUids.contains(uuid)) {
-                eventListeners.remove(uidEventListener);
-                eventListenerUids.remove(uuid);
-                return uidEventListener.getEventListener();
+    public <EVENT> EventSubscriber<EVENT> unregister(@NotNull EventSubscriber.UID<EVENT> eventSubscriberUid) {
+        AssertUtils.notNull(eventSubscriberUid, "无效的事件订阅者唯一序号");
+        if (eventSubscriberUid instanceof UIDEventSubscriber) {
+            UIDEventSubscriber<EVENT> uidEventSubscriber = (UIDEventSubscriber<EVENT>) eventSubscriberUid;
+            UUID uuid = uidEventSubscriber.getUuid();
+            if (eventSubscriberUids.contains(uuid)) {
+                eventSubscribers.remove(uidEventSubscriber);
+                eventSubscriberUids.remove(uuid);
+                return uidEventSubscriber.getEventSubscriber();
             }
         }
         return null;
     }
 
-    private static final class UIDEventListener<EVENT> implements EventListener.UID<EVENT>, EventListener<EVENT>, Orderable {
+    private static final class UIDEventSubscriber<EVENT> implements EventSubscriber.UID<EVENT>, EventSubscriber<EVENT>, Orderable {
 
         private final UUID uuid;
-        private final EventListener<EVENT> eventListener;
+        private final EventSubscriber<EVENT> eventSubscriber;
         private final Class<EVENT> eventType;
         private final int order;
 
         @SuppressWarnings({"unchecked"})
-        private UIDEventListener(@NotNull UUID uuid, @NotNull EventListener<EVENT> eventListener) {
-            AssertUtils.notNull(uuid, "无效的事件监听器唯一序号");
-            AssertUtils.notNull(eventListener, "无效的事件监听器");
-            for (Method method : eventListener.getClass().getMethods()) {
+        private UIDEventSubscriber(@NotNull UUID uuid, @NotNull EventSubscriber<EVENT> eventSubscriber) {
+            AssertUtils.notNull(uuid, "无效的事件订阅者唯一序号");
+            AssertUtils.notNull(eventSubscriber, "无效的事件订阅者");
+            for (Method method : eventSubscriber.getClass().getMethods()) {
                 if ("on".equals(method.getName())) {
                     if (method.isBridge()) {
                         continue;
                     }
                     if (method.getParameterCount() == 1) {
                         this.uuid = uuid;
-                        this.eventListener = eventListener;
+                        this.eventSubscriber = eventSubscriber;
                         this.eventType = (Class<EVENT>) method.getParameterTypes()[0];
-                        this.order = EVENT_LISTENER_COMPARATOR.orderOf(eventListener);
+                        this.order = EVENT_SUBSCRIBER_COMPARATOR.orderOf(eventSubscriber);
                         return;
                     }
                 }
@@ -212,27 +212,27 @@ public final class EventBusImpl implements EventBus {
 
         @NotNull
         @Override
-        public EventListener<EVENT> getEventListener() {
-            return eventListener;
+        public EventSubscriber<EVENT> getEventSubscriber() {
+            return eventSubscriber;
         }
 
         @Override
         public int order() {
-            EventListener<EVENT> listener = getEventListener();
-            if (listener instanceof Orderable) {
-                return ((Orderable) listener).order();
+            EventSubscriber<EVENT> subscriber = getEventSubscriber();
+            if (subscriber instanceof Orderable) {
+                return ((Orderable) subscriber).order();
             }
             return order;
         }
 
         @Override
-        public void on(@NotNull EVENT event) throws Throwable {
-            getEventListener().on(event);
+        public void onEvent(@NotNull EVENT event) throws Throwable {
+            getEventSubscriber().onEvent(event);
         }
 
         @Override
         public void exceptionCaught(@NotNull Throwable throwable) throws Throwable {
-            getEventListener().exceptionCaught(throwable);
+            getEventSubscriber().exceptionCaught(throwable);
         }
 
         @Override
@@ -240,10 +240,10 @@ public final class EventBusImpl implements EventBus {
             if (this == o) {
                 return true;
             }
-            if (!(o instanceof UIDEventListener)) {
+            if (!(o instanceof UIDEventSubscriber)) {
                 return false;
             }
-            final UIDEventListener<?> that = (UIDEventListener<?>) o;
+            final UIDEventSubscriber<?> that = (UIDEventSubscriber<?>) o;
 
             if (order != that.order) {
                 return false;
@@ -251,7 +251,7 @@ public final class EventBusImpl implements EventBus {
             if (!uuid.equals(that.uuid)) {
                 return false;
             }
-            if (!eventListener.equals(that.eventListener)) {
+            if (!eventSubscriber.equals(that.eventSubscriber)) {
                 return false;
             }
             return Objects.equals(eventType, that.eventType);
@@ -260,7 +260,7 @@ public final class EventBusImpl implements EventBus {
         @Override
         public int hashCode() {
             int result = uuid.hashCode();
-            result = 31 * result + eventListener.hashCode();
+            result = 31 * result + eventSubscriber.hashCode();
             result = 31 * result + (eventType != null ? eventType.hashCode() : 0);
             result = 31 * result + order;
             return result;
