@@ -29,7 +29,7 @@
 
 > 简单易用的实用性系统实现
 > 
->> `hyper-command` 命令
+>> `hyper-director` 命令
 >
 >> `hyper-event-bus` 事件总线
 >
