@@ -1,3 +1,0 @@
-<component name="DependencyValidationManager">
-  <scope name="hyper-annotation" pattern="file[hyper.modules.hyper-annotation.*]:*.java" />
-</component>

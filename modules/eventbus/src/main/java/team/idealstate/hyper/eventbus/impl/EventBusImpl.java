@@ -19,8 +19,8 @@ package team.idealstate.hyper.eventbus.impl;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-import team.idealstate.hyper.annotation.lang.NotNull;
-import team.idealstate.hyper.annotation.lang.Nullable;
+import team.idealstate.hyper.common.annotation.lang.NotNull;
+import team.idealstate.hyper.common.annotation.lang.Nullable;
 import team.idealstate.hyper.core.common.AssertUtils;
 import team.idealstate.hyper.core.common.object.ObjectUtils;
 import team.idealstate.hyper.core.common.reflect.annotation.reflect.ReflectAnnotatedUtils;

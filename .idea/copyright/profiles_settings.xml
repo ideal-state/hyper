@@ -1,16 +1,11 @@
 <component name="CopyrightManager">
   <settings>
     <module2copyright>
-      <element module="hyper-annotation" copyright="[Apache2.0]hyper-annotation" />
-      <element module="hyper-core" copyright="[Apache2.0]hyper-core" />
+      <element module="hyper-common" copyright="[Apache2.0]hyper-common" />
       <element module="hyper-gradle-plugin" copyright="[Apache2.0]hyper-gradle-plugin" />
-      <element module="hyper-minecraft-spigot-framework" copyright="[GPL3.0]hyper-minecraft-spigot-framework" />
       <element module="hyper-context" copyright="[Apache2.0]hyper-context" />
-      <element module="hyper-library-loader" copyright="[Apache2.0]hyper-library-loader" />
-      <element module="hyper-command-api" copyright="[Apache2.0]hyper-command-api" />
-      <element module="hyper-command-impl" copyright="[Apache2.0]hyper-command-impl" />
-      <element module="hyper-event-api" copyright="[Apache2.0]hyper-event-api" />
-      <element module="hyper-event-impl" copyright="[Apache2.0]hyper-event-impl" />
+      <element module="hyper-eventbus" copyright="[Apache2.0]hyper-eventbus" />
+      <element module="hyper-director" copyright="[Apache2.0]hyper-director" />
     </module2copyright>
   </settings>
 </component>

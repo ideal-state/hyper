@@ -17,7 +17,7 @@
 
 package team.idealstate.hyper.eventbus.api;
 
-import team.idealstate.hyper.annotation.lang.NotNull;
+import team.idealstate.hyper.common.annotation.lang.NotNull;
 
 /**
  * <p>EventSubscriber</p>

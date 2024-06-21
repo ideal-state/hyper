@@ -5,19 +5,19 @@
     <file type="web" url="file://$PROJECT_DIR$" />
   </component>
   <component name="NullableNotNullManager">
-    <option name="myDefaultNullable" value="team.idealstate.hyper.annotation.lang.Nullable" />
-    <option name="myDefaultNotNull" value="team.idealstate.hyper.annotation.lang.NotNull" />
+    <option name="myDefaultNullable" value="team.idealstate.hyper.common.annotation.lang.Nullable" />
+    <option name="myDefaultNotNull" value="team.idealstate.hyper.common.annotation.lang.NotNull" />
     <option name="myNullables">
       <value>
         <list size="1">
-          <item index="0" class="java.lang.String" itemvalue="team.idealstate.hyper.annotation.lang.Nullable" />
+          <item index="0" class="java.lang.String" itemvalue="team.idealstate.hyper.common.annotation.lang.Nullable" />
         </list>
       </value>
     </option>
     <option name="myNotNulls">
       <value>
         <list size="1">
-          <item index="0" class="java.lang.String" itemvalue="team.idealstate.hyper.annotation.lang.NotNull" />
+          <item index="0" class="java.lang.String" itemvalue="team.idealstate.hyper.common.annotation.lang.NotNull" />
         </list>
       </value>
     </option>

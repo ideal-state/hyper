@@ -1,3 +1,0 @@
-<component name="DependencyValidationManager">
-  <scope name="hyper-minecraft-spigot-framework" pattern="file[hyper.modules.minecraft.hyper-minecraft-spigot-framework.*]:*.java" />
-</component>

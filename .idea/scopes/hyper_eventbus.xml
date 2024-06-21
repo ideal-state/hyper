@@ -1,0 +1,3 @@
+<component name="DependencyValidationManager">
+  <scope name="hyper-eventbus" pattern="file[hyper.modules.hyper-eventbus.*]:*.java" />
+</component>
