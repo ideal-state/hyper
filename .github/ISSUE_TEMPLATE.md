@@ -13,7 +13,7 @@
 <!-- "1.0.0" or ... -->
 **version\*:** ""
 
-<!-- "jdk8", "zulu jdk8", "kotlin jvm 1.9.20" or ... -->
+<!-- "jdk8", "zulu jdk8", "kotlin jvm 2.0.0" or ... -->
 **platform\*:** ""
 
 <!-- "windows", "linux" or "mac" -->

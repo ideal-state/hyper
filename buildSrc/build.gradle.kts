@@ -3,14 +3,14 @@ import java.util.*
 
 plugins {
     id("java-gradle-plugin")
-    kotlin("jvm") version "1.9.20"
+    kotlin("jvm") version "2.0.0"
     id("org.jetbrains.dokka") version "1.9.20"
 }
 
 group = "team.idealstate.hyper"
 version = "1.0.0"
 
-val kotlinVersion = "1.9.20"
+val kotlinVersion = "2.0.0"
 kotlin {
     coreLibrariesVersion = kotlinVersion
     val javaVersion = 8
@@ -38,7 +38,8 @@ repositories {
 
 dependencies {
     implementation("org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlinVersion")
-    implementation("org.jetbrains.dokka:dokka-gradle-plugin:$kotlinVersion")
+//    implementation("org.jetbrains.dokka:dokka-gradle-plugin:$kotlinVersion")
+    implementation("org.jetbrains.dokka:dokka-gradle-plugin:1.9.20")
     val jacksonVersion = "2.17.0"
     implementation("com.fasterxml.jackson.dataformat:jackson-dataformat-toml:$jacksonVersion")
     implementation("com.fasterxml.jackson.module:jackson-module-kotlin:$jacksonVersion")
