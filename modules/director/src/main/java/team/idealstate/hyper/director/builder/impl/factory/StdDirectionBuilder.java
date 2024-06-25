@@ -15,7 +15,7 @@
  *    limitations under the License.
  */
 
-package team.idealstate.hyper.director.builder.impl;
+package team.idealstate.hyper.director.builder.impl.factory;
 
 import team.idealstate.hyper.common.AssertUtils;
 import team.idealstate.hyper.common.annotation.lang.NotNull;
@@ -38,8 +38,8 @@ import java.util.function.Consumer;
  * <p>创建于 2024/3/27 8:41</p>
  *
  * @author ketikai
- * @version 2.0.0
- * @since 2.0.0
+ * @version 1.0.0
+ * @since 1.0.0
  */
 final class StdDirectionBuilder implements DirectionBuilder {
 

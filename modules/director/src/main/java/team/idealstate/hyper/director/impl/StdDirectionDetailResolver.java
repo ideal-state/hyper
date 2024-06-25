@@ -29,8 +29,8 @@ import team.idealstate.hyper.director.api.exception.InvalidDirectionException;
  * <p>创建于 2024/3/27 11:49</p>
  *
  * @author ketikai
- * @version 2.0.0
- * @since 2.0.0
+ * @version 1.0.0
+ * @since 1.0.0
  */
 public final class StdDirectionDetailResolver implements DirectionDetailResolver {
 

@@ -40,8 +40,8 @@ import java.util.Map;
  * <p>创建于 2024/3/24 1:08</p>
  *
  * @author ketikai
- * @version 2.0.0
- * @since 2.0.0
+ * @version 1.0.0
+ * @since 1.0.0
  */
 public final class StdDirection implements Direction {
 

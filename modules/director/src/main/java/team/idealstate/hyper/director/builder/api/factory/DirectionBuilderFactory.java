@@ -15,32 +15,27 @@
  *    limitations under the License.
  */
 
-package team.idealstate.hyper.director.builder.impl;
+package team.idealstate.hyper.director.builder.api.factory;
 
-import team.idealstate.hyper.common.AssertUtils;
 import team.idealstate.hyper.common.annotation.lang.NotNull;
 import team.idealstate.hyper.director.api.factory.DirectionFactory;
 import team.idealstate.hyper.director.api.factory.DirectionUnitFactory;
 import team.idealstate.hyper.director.builder.api.DirectionBuilder;
 
 /**
- * <p>StdDirectionBuilderFactory</p>
+ * <p>DirectionBuilderFactory</p>
  *
- * <p>创建于 2024/3/27 11:34</p>
+ * <p>创建于 2024/6/26 上午7:09</p>
  *
  * @author ketikai
- * @version 2.0.0
- * @since 2.0.0
+ * @version 1.0.0
+ * @since 1.0.0
  */
-public abstract class StdDirectionBuilderFactory {
+public interface DirectionBuilderFactory {
 
     @NotNull
-    public static DirectionBuilder builder(
+    DirectionBuilder builder(
             @NotNull DirectionFactory directionFactory,
             @NotNull DirectionUnitFactory directionUnitFactory
-    ) {
-        AssertUtils.notNull(directionFactory, "无效的指令工厂");
-        AssertUtils.notNull(directionUnitFactory, "无效的指令单元工厂");
-        return new StdDirectionBuilder(directionFactory, directionUnitFactory);
-    }
+    );
 }

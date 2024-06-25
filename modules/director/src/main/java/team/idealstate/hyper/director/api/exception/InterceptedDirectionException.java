@@ -23,8 +23,8 @@ package team.idealstate.hyper.director.api.exception;
  * <p>创建于 2024/3/27 5:12</p>
  *
  * @author ketikai
- * @version 2.0.0
- * @since 2.0.0
+ * @version 1.0.0
+ * @since 1.0.0
  */
 public class InterceptedDirectionException extends DirectionException {
     private static final long serialVersionUID = -2867301262964807977L;
