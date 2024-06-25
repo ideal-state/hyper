@@ -29,11 +29,11 @@
 
 > 简单易用的实用性系统实现
 > 
->> `hyper-director` 命令
+>> `hyper-director` 指令系统
 >
 >> `hyper-event-bus` 事件总线
 >
->> `hyper-context` 控制反转上下文
+>> `hyper-context` 应用程序上下文
 >
 > 未来计划：实用性系统的配套 idea 插件……
 
