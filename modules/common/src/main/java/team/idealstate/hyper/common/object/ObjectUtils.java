@@ -17,9 +17,9 @@
 
 package team.idealstate.hyper.common.object;
 
+import team.idealstate.hyper.common.AssertUtils;
 import team.idealstate.hyper.common.annotation.lang.NotNull;
 import team.idealstate.hyper.common.annotation.lang.Nullable;
-import team.idealstate.hyper.common.AssertUtils;
 import team.idealstate.hyper.common.io.IOUtils;
 import team.idealstate.hyper.common.resource.ResourceUtils;
 import team.idealstate.hyper.common.template.MapUtils;
@@ -29,6 +29,7 @@ import java.io.Serializable;
 import java.lang.invoke.MethodHandle;
 import java.lang.invoke.MethodHandles;
 import java.lang.reflect.Method;
+import java.lang.reflect.Modifier;
 import java.util.Map;
 import java.util.Objects;
 
@@ -57,6 +58,13 @@ public abstract class ObjectUtils {
     public static <T> T defaultIfNull(@Nullable T object, @NotNull T def) {
         AssertUtils.notNull(def, "无效的默认值");
         return isNull(object) ? def : object;
+    }
+
+    @NotNull
+    public static <T> T throwExIfNull(@Nullable T object, @NotNull String msg) {
+        AssertUtils.notNull(object, msg);
+        assert object != null;
+        return object;
     }
 
     public static boolean isEquals(@Nullable Object object1, @Nullable Object object2) {
@@ -111,7 +119,7 @@ public abstract class ObjectUtils {
     @SuppressWarnings({"unchecked"})
     public static <T> T copyOf(@NotNull T object) {
         AssertUtils.notNull(object, "无效的对象");
-        if (object instanceof Cloneable) {
+        if (ObjectUtils.isCloneable(object)) {
             try {
                 return (T) CLONE_METHOD_HANDLES.computeIfAbsent(object.getClass(), (cls) -> {
                     Method clone;
@@ -119,10 +127,9 @@ public abstract class ObjectUtils {
                         clone = object.getClass().getDeclaredMethod("clone");
                         return MethodHandles.publicLookup().unreflect(clone);
                     } catch (NoSuchMethodException | IllegalAccessException e) {
-                        throw new NoSuchCloneMethodException(e);
+                        throw new RuntimeException(e);
                     }
                 }).bindTo(object).invoke();
-            } catch (NoSuchCloneMethodException ignored) {
             } catch (Throwable e) {
                 throw new RuntimeException(e);
             }
@@ -143,18 +150,16 @@ public abstract class ObjectUtils {
         throw new UnsupportedOperationException("无法拷贝对象（对象未实现 Cloneable 或 Serializable）。");
     }
 
-    private static final class NoSuchCloneMethodException extends RuntimeException {
-        private static final long serialVersionUID = 6999810975083375550L;
-
-        private NoSuchCloneMethodException(Throwable cause) {
-            super(cause);
+    public static boolean isCloneable(@NotNull Object object) {
+        AssertUtils.notNull(object, "无效的对象");
+        if (!(object instanceof Cloneable)) {
+            return false;
         }
-    }
-
-    static class A implements Cloneable {
-        @Override
-        protected Object clone() throws CloneNotSupportedException {
-            return super.clone();
-        }
+        try {
+            if (Modifier.isPublic(object.getClass().getMethod("clone").getModifiers())) {
+                return true;
+            }
+        } catch (NoSuchMethodException ignored) {}
+        return false;
     }
 }
