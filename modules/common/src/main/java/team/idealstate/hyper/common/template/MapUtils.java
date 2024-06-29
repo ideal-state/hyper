@@ -17,9 +17,9 @@
 
 package team.idealstate.hyper.common.template;
 
+import team.idealstate.hyper.common.AssertUtils;
 import team.idealstate.hyper.common.annotation.lang.NotNull;
 import team.idealstate.hyper.common.annotation.lang.Nullable;
-import team.idealstate.hyper.common.AssertUtils;
 import team.idealstate.hyper.common.array.ArrayUtils;
 import team.idealstate.hyper.common.object.ObjectUtils;
 
@@ -87,6 +87,11 @@ public abstract class MapUtils {
         return Collections.emptyMap();
     }
 
+    @NotNull
+    public static <K, V> Map.Entry<K, V> entryOf(K key, V value) {
+        return new MapEntry<>(key, value);
+    }
+
     @SafeVarargs
     @NotNull
     public static <K, V> Map<K, V> mapOf(Map.Entry<K, V>... entries) {
@@ -144,5 +149,32 @@ public abstract class MapUtils {
             return new ConcurrentHashMap<>(16, 0.6F);
         }
         return new ConcurrentHashMap<>(map);
+    }
+
+    private static final class MapEntry<K, V> implements Map.Entry<K, V> {
+        private final K key;
+        private V value;
+
+        public MapEntry(K key, V value) {
+            this.key = key;
+            this.value = value;
+        }
+
+        @Override
+        public K getKey() {
+            return key;
+        }
+
+        @Override
+        public V getValue() {
+            return value;
+        }
+
+        @Override
+        public V setValue(V value) {
+            V oldValue = this.value;
+            this.value = value;
+            return oldValue;
+        }
     }
 }
