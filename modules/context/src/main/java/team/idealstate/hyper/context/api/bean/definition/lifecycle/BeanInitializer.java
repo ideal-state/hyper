@@ -15,42 +15,27 @@
  *    limitations under the License.
  */
 
-package team.idealstate.hyper.context.api.bean.definition;
+package team.idealstate.hyper.context.api.bean.definition.lifecycle;
 
 import team.idealstate.hyper.common.annotation.lang.NotNull;
-import team.idealstate.hyper.common.annotation.lang.Nullable;
-import team.idealstate.hyper.context.api.bean.definition.lifecycle.BeanConstructor;
-import team.idealstate.hyper.context.api.bean.definition.lifecycle.BeanDestroyer;
-import team.idealstate.hyper.context.api.bean.definition.lifecycle.BeanInitializer;
+import team.idealstate.hyper.context.api.bean.able.Initializable;
 
 /**
- * <p>BeanDefinition</p>
+ * <p>BeanInitializer</p>
  *
- * <p>创建于 2024/6/26 上午7:05</p>
+ * <p>创建于 2024/6/29 下午12:57</p>
  *
  * @author ketikai
  * @version 1.0.0
  * @since 1.0.0
  */
-public interface BeanDefinition {
+public interface BeanInitializer {
 
-    @NotNull
-    String getName();
+    BeanInitializer DEFAULT = (beanObject) -> {
+        if (beanObject instanceof Initializable) {
+            ((Initializable) beanObject).initialize();
+        }
+    };
 
-    @NotNull
-    String getClassName();
-
-    @NotNull
-    String getScope();
-
-    boolean isLazy();
-
-    @NotNull
-    BeanConstructor getConstructor();
-
-    @Nullable
-    BeanInitializer getInitializer();
-
-    @Nullable
-    BeanDestroyer getDestroyer();
+    void initialize(@NotNull Object beanObject);
 }

@@ -37,7 +37,11 @@ import java.util.Map;
  */
 public final class StdBeanScopeRegistry implements BeanScopeRegistry {
 
-    private final Map<String, BeanScope> beanScopesByName = MapUtils.concurrentMapOf();
+    private final Map<String, BeanScope> beanScopesByName = MapUtils.concurrentMapOf(
+            MapUtils.entryOf(BeanScope.NEW, new StdNewBeanScope()),
+            MapUtils.entryOf(BeanScope.SINGLETON, new StdSingletonBeanScope()),
+            MapUtils.entryOf(BeanScope.PROTOTYPE, new StdPrototypeBeanScope())
+    );
 
     @Override
     public void registerBeanScope(@NotNull String name, @NotNull BeanScope beanScope) {

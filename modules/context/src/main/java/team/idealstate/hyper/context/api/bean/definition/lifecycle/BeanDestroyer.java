@@ -15,29 +15,27 @@
  *    limitations under the License.
  */
 
-package team.idealstate.hyper.context.api.bean.annotation;
+package team.idealstate.hyper.context.api.bean.definition.lifecycle;
 
-import team.idealstate.hyper.context.api.bean.scope.BeanScope;
-
-import java.lang.annotation.*;
+import team.idealstate.hyper.common.annotation.lang.NotNull;
+import team.idealstate.hyper.context.api.bean.able.Destroyable;
 
 /**
- * <p>Component</p>
+ * <p>BeanDestroyer</p>
  *
- * <p>创建于 2024/6/26 上午7:38</p>
+ * <p>创建于 2024/6/29 下午12:58</p>
  *
  * @author ketikai
  * @version 1.0.0
  * @since 1.0.0
  */
-@Target({ElementType.TYPE})
-@Retention(RetentionPolicy.RUNTIME)
-@Documented
-public @interface Component {
+public interface BeanDestroyer {
 
-    String value() default "";
+    BeanDestroyer DEFAULT = (beanObject) -> {
+        if (beanObject instanceof Destroyable) {
+            ((Destroyable) beanObject).destroy();
+        }
+    };
 
-    String scope() default BeanScope.SINGLETON;
-
-    boolean lazy() default false;
+    void destroy(@NotNull Object beanObject);
 }

@@ -19,8 +19,13 @@ package team.idealstate.hyper.context.impl.bean.definition;
 
 import team.idealstate.hyper.common.AssertUtils;
 import team.idealstate.hyper.common.annotation.lang.NotNull;
-import team.idealstate.hyper.context.api.bean.definition.BeanConstructor;
+import team.idealstate.hyper.common.annotation.lang.Nullable;
 import team.idealstate.hyper.context.api.bean.definition.BeanDefinition;
+import team.idealstate.hyper.context.api.bean.definition.lifecycle.BeanConstructor;
+import team.idealstate.hyper.context.api.bean.definition.lifecycle.BeanDestroyer;
+import team.idealstate.hyper.context.api.bean.definition.lifecycle.BeanInitializer;
+
+import java.util.Objects;
 
 /**
  * <p>StdBeanDefinition</p>
@@ -36,13 +41,19 @@ public class StdBeanDefinition implements BeanDefinition {
     private final String name;
     private final String className;
     private final String scope;
+    private final boolean lazy;
     private final BeanConstructor constructor;
+    private final BeanInitializer initializer;
+    private final BeanDestroyer destroyer;
 
     public StdBeanDefinition(
             @NotNull String name,
             @NotNull String className,
             @NotNull String scope,
-            @NotNull BeanConstructor constructor
+            boolean lazy,
+            @NotNull BeanConstructor constructor,
+            BeanInitializer initializer,
+            BeanDestroyer destroyer
     ) {
         AssertUtils.notNullOrBlank(name, "无效的 Bean 名称");
         AssertUtils.notNullOrBlank(className, "无效的 Bean 类名");
@@ -51,7 +62,10 @@ public class StdBeanDefinition implements BeanDefinition {
         this.name = name;
         this.className = className;
         this.scope = scope;
+        this.lazy = lazy;
         this.constructor = constructor;
+        this.initializer = initializer;
+        this.destroyer = destroyer;
     }
 
     @NotNull
@@ -72,10 +86,27 @@ public class StdBeanDefinition implements BeanDefinition {
         return scope;
     }
 
+    @Override
+    public boolean isLazy() {
+        return lazy;
+    }
+
     @NotNull
     @Override
     public BeanConstructor getConstructor() {
         return constructor;
+    }
+
+    @Nullable
+    @Override
+    public BeanInitializer getInitializer() {
+        return initializer;
+    }
+
+    @Nullable
+    @Override
+    public BeanDestroyer getDestroyer() {
+        return destroyer;
     }
 
     @Override
@@ -88,6 +119,9 @@ public class StdBeanDefinition implements BeanDefinition {
         }
         final StdBeanDefinition that = (StdBeanDefinition) object;
 
+        if (lazy != that.lazy) {
+            return false;
+        }
         if (!name.equals(that.name)) {
             return false;
         }
@@ -97,7 +131,13 @@ public class StdBeanDefinition implements BeanDefinition {
         if (!scope.equals(that.scope)) {
             return false;
         }
-        return constructor.equals(that.constructor);
+        if (!constructor.equals(that.constructor)) {
+            return false;
+        }
+        if (!Objects.equals(initializer, that.initializer)) {
+            return false;
+        }
+        return Objects.equals(destroyer, that.destroyer);
     }
 
     @Override
@@ -105,7 +145,10 @@ public class StdBeanDefinition implements BeanDefinition {
         int result = name.hashCode();
         result = 31 * result + className.hashCode();
         result = 31 * result + scope.hashCode();
+        result = 31 * result + (lazy ? 1 : 0);
         result = 31 * result + constructor.hashCode();
+        result = 31 * result + (initializer != null ? initializer.hashCode() : 0);
+        result = 31 * result + (destroyer != null ? destroyer.hashCode() : 0);
         return result;
     }
 }

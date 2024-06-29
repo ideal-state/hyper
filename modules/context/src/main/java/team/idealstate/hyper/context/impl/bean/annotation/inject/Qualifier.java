@@ -15,23 +15,23 @@
  *    limitations under the License.
  */
 
-package team.idealstate.hyper.context.api.bean.annotation.process;
+package team.idealstate.hyper.context.impl.bean.annotation.inject;
 
 import java.lang.annotation.*;
 
 /**
- * <p>Autowired</p>
+ * <p>Qualifier</p>
  *
- * <p>创建于 2024/6/26 上午7:45</p>
+ * <p>创建于 2024/6/29 下午2:20</p>
  *
  * @author ketikai
  * @version 1.0.0
  * @since 1.0.0
  */
-@Target({ElementType.METHOD})
+@Target({ElementType.PARAMETER})
 @Retention(RetentionPolicy.RUNTIME)
 @Documented
-public @interface Autowired {
+public @interface Qualifier {
 
     String value() default "";
 }

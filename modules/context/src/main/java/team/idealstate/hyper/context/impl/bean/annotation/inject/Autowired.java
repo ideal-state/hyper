@@ -15,30 +15,21 @@
  *    limitations under the License.
  */
 
-package team.idealstate.hyper.context.api.bean.factory;
+package team.idealstate.hyper.context.impl.bean.annotation.inject;
 
-import team.idealstate.hyper.common.annotation.lang.NotNull;
-import team.idealstate.hyper.context.api.bean.factory.process.BeanProcessorRegistry;
-import team.idealstate.hyper.context.api.bean.factory.proxy.BeanProxyRegistry;
-import team.idealstate.hyper.context.api.bean.inject.BeanPropertyInjector;
+import java.lang.annotation.*;
 
 /**
- * <p>ConfigurableBeanFactory</p>
+ * <p>Autowired</p>
  *
- * <p>创建于 2024/6/28 下午8:26</p>
+ * <p>创建于 2024/6/26 上午7:45</p>
  *
  * @author ketikai
  * @version 1.0.0
  * @since 1.0.0
  */
-public interface ConfigurableBeanFactory extends BeanFactory {
-
-    @NotNull
-    BeanProcessorRegistry getBeanProcessorRegistry();
-
-    @NotNull
-    BeanProxyRegistry getBeanProxyRegistry();
-
-    @NotNull
-    BeanPropertyInjector getBeanPropertyInjector();
+@Target({ElementType.METHOD})
+@Retention(RetentionPolicy.RUNTIME)
+@Documented
+public @interface Autowired {
 }

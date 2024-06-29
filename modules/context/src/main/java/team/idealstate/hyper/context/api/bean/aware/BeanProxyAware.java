@@ -15,25 +15,20 @@
  *    limitations under the License.
  */
 
-package team.idealstate.hyper.context.api.bean.annotation;
+package team.idealstate.hyper.context.api.bean.aware;
 
-import java.lang.annotation.*;
+import team.idealstate.hyper.common.annotation.lang.NotNull;
 
 /**
- * <p>Bean</p>
+ * <p>BeanProxyAware</p>
  *
- * <p>创建于 2024/6/26 上午7:45</p>
+ * <p>创建于 2024/6/29 下午1:01</p>
  *
  * @author ketikai
  * @version 1.0.0
  * @since 1.0.0
  */
-@Target({ElementType.METHOD})
-@Retention(RetentionPolicy.RUNTIME)
-@Documented
-public @interface Bean {
+public interface BeanProxyAware extends Aware {
 
-    String value() default "";
-
-    boolean lazy() default true;
+    void setBeanProxy(@NotNull Object proxyBeanObject);
 }

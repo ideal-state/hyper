@@ -18,10 +18,12 @@
 package team.idealstate.hyper.context.impl.bean.factory;
 
 import team.idealstate.hyper.common.annotation.lang.NotNull;
-import team.idealstate.hyper.context.api.bean.BeanContext;
-import team.idealstate.hyper.context.api.bean.definition.BeanDefinition;
 import team.idealstate.hyper.context.api.bean.factory.AbstractBeanFactory;
 import team.idealstate.hyper.context.api.bean.factory.process.BeanProcessorRegistry;
+import team.idealstate.hyper.context.api.bean.factory.proxy.BeanProxyRegistry;
+import team.idealstate.hyper.context.api.bean.inject.BeanPropertyInjector;
+import team.idealstate.hyper.context.impl.bean.factory.process.StdBeanProcessorRegistry;
+import team.idealstate.hyper.context.impl.bean.factory.proxy.StdBeanProxyRegistry;
 
 /**
  * <p>StdBeanFactory</p>
@@ -34,12 +36,14 @@ import team.idealstate.hyper.context.api.bean.factory.process.BeanProcessorRegis
  */
 public final class StdBeanFactory extends AbstractBeanFactory {
 
-    public StdBeanFactory(@NotNull BeanProcessorRegistry beanProcessorRegistry) {
-        super(beanProcessorRegistry);
+    public StdBeanFactory() {
+        super(
+                new StdBeanProxyRegistry(),
+                new StdBeanProcessorRegistry()
+        );
     }
 
-    @Override
-    protected void populateFields(@NotNull BeanContext beanContext, @NotNull BeanDefinition beanDefinition, @NotNull Object beanObject) {
-        // noting to do
+    public StdBeanFactory(@NotNull BeanProxyRegistry beanProxyRegistry, @NotNull BeanProcessorRegistry beanProcessorRegistry, @NotNull BeanPropertyInjector beanPropertyInjector) {
+        super(beanProxyRegistry, beanProcessorRegistry, beanPropertyInjector);
     }
 }

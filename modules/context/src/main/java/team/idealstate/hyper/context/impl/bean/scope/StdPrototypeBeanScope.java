@@ -120,45 +120,45 @@ public final class StdPrototypeBeanScope implements BeanScope {
     public <T> T getBean(@NotNull String name, @NotNull Class<T> type) {
         AssertUtils.notNullOrBlank(name, "无效的 Bean 名称");
         AssertUtils.notNull(type, "无效的 Bean 类型");
-        Object singletonObject = prototypes.get(name);
-        if (singletonObject == null) {
-            singletonObject = earlyPrototypes.get(name);
+        Object prototypeObject = prototypes.get(name);
+        if (prototypeObject == null) {
+            prototypeObject = earlyPrototypes.get(name);
         }
-        if (ObjectUtils.isNull(singletonObject)) {
+        if (ObjectUtils.isNull(prototypeObject)) {
             return null;
         }
-        if (!type.isAssignableFrom(singletonObject.getClass())) {
+        if (!type.isAssignableFrom(prototypeObject.getClass())) {
             return null;
         }
-        return type.cast(ObjectUtils.copyOf(singletonObject));
+        return type.cast(ObjectUtils.copyOf(prototypeObject));
     }
 
     @Nullable
     @Override
     public Object getBeanByName(@NotNull String name) {
         AssertUtils.notNullOrBlank(name, "无效的 Bean 名称");
-        Object singletonObject = prototypes.get(name);
-        if (singletonObject == null) {
-            singletonObject = earlyPrototypes.get(name);
+        Object prototypeObject = prototypes.get(name);
+        if (prototypeObject == null) {
+            prototypeObject = earlyPrototypes.get(name);
         }
-        if (ObjectUtils.isNull(singletonObject)) {
+        if (ObjectUtils.isNull(prototypeObject)) {
             return null;
         }
-        return ObjectUtils.copyOf(singletonObject);
+        return ObjectUtils.copyOf(prototypeObject);
     }
 
     @Nullable
     @Override
     public <T> T getBeanByType(@NotNull Class<T> type) {
         AssertUtils.notNull(type, "无效的 Bean 类型");
-        for (Object singletonObject : prototypes.values()) {
-            if (type.isAssignableFrom(singletonObject.getClass())) {
-                return type.cast(ObjectUtils.copyOf(singletonObject));
+        for (Object prototypeObject : prototypes.values()) {
+            if (type.isAssignableFrom(prototypeObject.getClass())) {
+                return type.cast(ObjectUtils.copyOf(prototypeObject));
             }
         }
-        for (Object singletonObject : earlyPrototypes.values()) {
-            if (type.isAssignableFrom(singletonObject.getClass())) {
-                return type.cast(ObjectUtils.copyOf(singletonObject));
+        for (Object prototypeObject : earlyPrototypes.values()) {
+            if (type.isAssignableFrom(prototypeObject.getClass())) {
+                return type.cast(ObjectUtils.copyOf(prototypeObject));
             }
         }
         return null;
@@ -168,20 +168,20 @@ public final class StdPrototypeBeanScope implements BeanScope {
     @Override
     public <T> List<T> getBeansByType(@NotNull Class<T> type) {
         AssertUtils.notNull(type, "无效的 Bean 类型");
-        Set<T> singletonObjects = SetUtils.linkedSetOf();
-        for (Object singletonObject : prototypes.values()) {
-            if (type.isAssignableFrom(singletonObject.getClass())) {
-                singletonObjects.add(type.cast(ObjectUtils.copyOf(singletonObject)));
+        Set<T> prototypeObjects = SetUtils.linkedSetOf();
+        for (Object prototypeObject : prototypes.values()) {
+            if (type.isAssignableFrom(prototypeObject.getClass())) {
+                prototypeObjects.add(type.cast(ObjectUtils.copyOf(prototypeObject)));
             }
         }
-        for (Object singletonObject : earlyPrototypes.values()) {
-            if (type.isAssignableFrom(singletonObject.getClass())) {
-                singletonObjects.add(type.cast(ObjectUtils.copyOf(singletonObject)));
+        for (Object prototypeObject : earlyPrototypes.values()) {
+            if (type.isAssignableFrom(prototypeObject.getClass())) {
+                prototypeObjects.add(type.cast(ObjectUtils.copyOf(prototypeObject)));
             }
         }
-        if (CollectionUtils.isEmpty(singletonObjects)) {
+        if (CollectionUtils.isEmpty(prototypeObjects)) {
             return ListUtils.emptyList();
         }
-        return ListUtils.linkedListOf(singletonObjects);
+        return ListUtils.linkedListOf(prototypeObjects);
     }
 }

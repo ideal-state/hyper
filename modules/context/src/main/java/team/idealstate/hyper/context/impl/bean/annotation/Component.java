@@ -15,22 +15,29 @@
  *    limitations under the License.
  */
 
-package team.idealstate.hyper.context.api.bean.definition;
+package team.idealstate.hyper.context.impl.bean.annotation;
 
-import team.idealstate.hyper.common.annotation.lang.NotNull;
-import team.idealstate.hyper.context.api.bean.BeanContext;
+import team.idealstate.hyper.context.api.bean.scope.BeanScope;
+
+import java.lang.annotation.*;
 
 /**
- * <p>BeanConstructor</p>
+ * <p>Component</p>
  *
- * <p>创建于 2024/6/28 下午7:56</p>
+ * <p>创建于 2024/6/26 上午7:38</p>
  *
  * @author ketikai
  * @version 1.0.0
  * @since 1.0.0
  */
-public interface BeanConstructor {
+@Target({ElementType.TYPE})
+@Retention(RetentionPolicy.RUNTIME)
+@Documented
+public @interface Component {
 
-    @NotNull
-    Object constructBean(@NotNull BeanContext beanContext);
+    String value() default "";
+
+    String scope() default BeanScope.SINGLETON;
+
+    boolean lazy() default false;
 }

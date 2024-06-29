@@ -15,51 +15,52 @@
  *    limitations under the License.
  */
 
-package team.idealstate.hyper.context.impl.bean.factory.process;
+package team.idealstate.hyper.context.impl.bean.factory.proxy;
 
 import team.idealstate.hyper.common.AssertUtils;
 import team.idealstate.hyper.common.annotation.lang.NotNull;
 import team.idealstate.hyper.common.template.CollectionUtils;
 import team.idealstate.hyper.common.template.ListUtils;
 import team.idealstate.hyper.common.template.SetUtils;
-import team.idealstate.hyper.context.api.bean.factory.process.BeanProcessor;
-import team.idealstate.hyper.context.api.bean.factory.process.BeanProcessorRegistry;
+import team.idealstate.hyper.context.api.bean.factory.proxy.BeanProxy;
+import team.idealstate.hyper.context.api.bean.factory.proxy.BeanProxyRegistry;
 
 import java.util.Collection;
+import java.util.Collections;
 import java.util.List;
 import java.util.Set;
 
 /**
- * <p>StdBeanProcessorRegistry</p>
+ * <p>StdBeanProxyRegistry</p>
  *
- * <p>创建于 2024/6/28 下午9:14</p>
+ * <p>创建于 2024/6/29 下午1:53</p>
  *
  * @author ketikai
  * @version 1.0.0
  * @since 1.0.0
  */
-public final class StdBeanProcessorRegistry implements BeanProcessorRegistry {
+public final class StdBeanProxyRegistry implements BeanProxyRegistry {
 
-    private final Set<BeanProcessor> beanProcessors = SetUtils.concurrentSetOf();
+    private final Set<BeanProxy> beanProxies = SetUtils.concurrentSetOf();
 
     @Override
-    public void registerBeanProcessor(@NotNull BeanProcessor beanProcessor) {
-        AssertUtils.notNull(beanProcessor, "无效的 Bean 处理器");
-        beanProcessors.add(beanProcessor);
+    public void registerBeanProxy(@NotNull BeanProxy beanProxy) {
+        AssertUtils.notNull(beanProxy, "无效的 Bean 代理器");
+        beanProxies.add(beanProxy);
     }
 
     @Override
-    public void registerBeanProcessors(@NotNull Collection<BeanProcessor> beanProcessors) {
-        AssertUtils.notNull(beanProcessors, "无效的 Bean 处理器集合");
-        this.beanProcessors.addAll(beanProcessors);
+    public void registerBeanProxies(@NotNull Collection<BeanProxy> beanProxies) {
+        AssertUtils.notNull(beanProxies, "无效的 Bean 代理器集合");
+        this.beanProxies.addAll(beanProxies);
     }
 
     @NotNull
     @Override
-    public List<BeanProcessor> getBeanProcessors() {
-        if (CollectionUtils.isEmpty(beanProcessors)) {
-            return ListUtils.emptyList();
+    public List<BeanProxy> getBeanProxies() {
+        if (CollectionUtils.isEmpty(beanProxies)) {
+            return Collections.emptyList();
         }
-        return ListUtils.linkedListOf(beanProcessors);
+        return ListUtils.linkedListOf(beanProxies);
     }
 }

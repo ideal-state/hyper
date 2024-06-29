@@ -32,13 +32,20 @@ import team.idealstate.hyper.context.api.bean.definition.BeanDefinition;
  */
 public interface BeanProcessor {
 
-    @NotNull
-    default Object preProcessBean(@NotNull BeanContext beanContext, @NotNull BeanDefinition beanDefinition, @NotNull Object beanObject) {
-        return beanObject;
+    default void preProcessBean(
+            @NotNull BeanContext beanContext,
+            @NotNull BeanDefinition beanDefinition,
+            @NotNull Object beanObject,
+            @NotNull Object proxyBeanObject
+    ) {
     }
 
-    @NotNull
-    default Object postProcessBean(@NotNull BeanContext beanContext, @NotNull BeanDefinition beanDefinition, @NotNull Object beanObject) {
-        return beanObject;
+    default void postProcessBean(
+            @NotNull BeanContext beanContext,
+            @NotNull BeanDefinition beanDefinition,
+            @NotNull Object beanObject,
+            @NotNull Object proxyBeanObject
+    ) {
+
     }
 }
