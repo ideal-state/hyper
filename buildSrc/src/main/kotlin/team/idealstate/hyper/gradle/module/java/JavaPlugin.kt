@@ -187,6 +187,33 @@ open class JavaPlugin : ConfigurablePlugin<Java>(
                         "dependencies" to dependencies
                     )
                 )
+
+                val assetsDirFile = File(it.destinationDir, assetsDir)
+                copyFile(project.file(LICENSES_DIR), assetsDirFile)
+                copyFile(project.file(LICENSE_TXT), assetsDirFile)
+                copyFile(project.file(NOTICE_TXT), assetsDirFile)
+            }
+        }
+    }
+
+    protected fun copyFile(source: File, destinationDir: File) {
+        if (!source.exists()) {
+            return
+        }
+        if (!destinationDir.exists()) {
+            destinationDir.mkdirs()
+        }
+        require(destinationDir.isDirectory) { "目标路径 '${destinationDir}' 不是一个有效的文件夹" }
+        if (source.isFile) {
+            source.copyTo(File(destinationDir, source.name))
+            return
+        }
+        val destDir = File(destinationDir, source.name)
+        source.listFiles()?.forEach { file ->
+            if (file.isDirectory) {
+                copyFile(file, destDir)
+            } else {
+                file.copyTo(File(destDir, file.name))
             }
         }
     }
@@ -246,6 +273,15 @@ open class JavaPlugin : ConfigurablePlugin<Java>(
 
         @JvmStatic
         val API = "api"
+
+        @JvmStatic
+        val LICENSES_DIR = "LICENSES"
+
+        @JvmStatic
+        val LICENSE_TXT = "LICENSE.txt"
+
+        @JvmStatic
+        val NOTICE_TXT = "NOTICE.txt"
 
         @JvmStatic
         fun getHyperConfigurationName(originalName: String): String {

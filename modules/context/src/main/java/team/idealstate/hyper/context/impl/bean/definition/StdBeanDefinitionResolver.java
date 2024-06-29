@@ -44,6 +44,7 @@ public final class StdBeanDefinitionResolver implements BeanDefinitionResolver<F
         if (!(file.isFile() && file.getName().endsWith(".class"))) {
             return ListUtils.emptyList();
         }
-
+        // TODO 解析 Bean 定义
+        return null;
     }
 }

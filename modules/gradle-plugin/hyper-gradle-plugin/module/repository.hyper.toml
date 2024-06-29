@@ -5,8 +5,8 @@ url = "https://oss.sonatype.org/content/groups/public/"
 
 [[repositories]]
 type = "maven"
-name = "aliyun-central"
-url = "https://maven.aliyun.com/repository/central/"
+name = "aliyun-public"
+url = "https://maven.aliyun.com/repository/public/"
 
 #[[repositories]]
 #type = "maven"
